@@ -1,0 +1,554 @@
+/* 
+	Styles for agenda page, taxonomy sd_txn_dates with upcoming event dates.
+	
+	@package HelloIVY
+*/
+
+/*
+	reusable elements here...
+*/
+
+.divider-separator {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	/* flex-wrap: wrap; */
+	margin: 20px 0 20px 0;
+	direction: ltr;
+}
+
+.divider-separator::after {
+	display: block;
+	content: "";
+	border-bottom: 0;
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	border-top: 4px solid var(--e-global-color-secondary);
+}
+
+.wrap {
+	flex-wrap: wrap;
+	display: flex;
+}
+
+.contents{
+	display: contents;
+}
+
+/* break row of a flex container*/
+.flex-row-break {
+	flex-basis: 100%;
+	height: 0;
+}
+
+/*
+	site styles here...
+*/
+
+#site-content {
+	padding: 10px;
+	max-width: 1270px;
+	margin: auto;
+}
+
+/*
+	header styles here...
+*/
+
+.archive-title {
+	color: var(--e-global-color-text);
+	font-size: 36px;
+	font-weight: bold;
+	letter-spacing: 0px;
+	line-height: 1;
+	padding: 0 15px 0 0;
+}
+
+.header-image img {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+	object-position: center;
+	margin-bottom: 20px;
+}
+
+.agenda-content{
+	display: flex;
+}
+
+/*
+	sidebar styles here
+*/
+
+.sidebar-content {
+	position: sticky;
+	position: -webkit-sticky; /* for Safari <= 13 */
+	top: 30px;
+	align-self: flex-start;
+	width: 250px;
+	margin: 50px 0 20px 0;
+	padding-right: 50px;
+}
+
+/*
+	page content styles here...
+*/
+
+.page-content {
+	width: calc(100% - 250px);
+	margin: -30px 0 80px 0;
+	padding-top: 50px;
+}
+
+.no-result {
+	padding-top: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.month-title {
+	color: var(--e-global-color-text);DE
+	font-size: 36px;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0px;
+	line-height: 1;
+	padding: 0 15px 0 0;
+}
+
+/* .month.divider-separator{
+	padding-top: 50px;
+} */
+
+.divider-dates .divider-separator::after{
+	border-top: 2px solid var(--e-global-color-secondary);
+}
+
+/* 
+	event date 
+*/
+
+.date-entry{
+	display: block;
+}
+
+.date-box{
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	height: 130px;
+	width: 130px;
+	background: #393939 0% 0% no-repeat padding-box;
+	opacity: 1;
+	text-align: center;
+	color: var( --e-global-color-accent );
+}
+
+.date-box .day{
+	font-size: 50px;
+	padding-bottom: 18px;
+}
+
+.date-box .month{
+	font-size: 30px;
+}
+
+.date-container {
+	display: grid;
+	grid-template-columns: 130px repeat(3, 1fr);
+	/* gap: 10px; */
+	/* background-color: #2196F3; */
+	transition: all .2s ease-in-out; 
+	/* padding: 18px 0 18px 0; */
+	margin: 18px 0 18px 0;
+}
+
+.date-container:hover{
+	transform: scale(1.02);
+}
+
+/* .date-container > a >div { */
+	/* background-color: rgba(255, 255, 255, 0.8); */
+	/* padding: 20px 0; */
+/* } */
+
+.date-start { 
+	grid-column-start: 1;
+	grid-column-end: 1;
+	grid-row-start: 1;
+	grid-row-end: 3;
+}
+
+.date-title{
+	grid-column-start: 2;
+	grid-column-end: 5;
+	grid-row-start: 1;
+	grid-row-end: 1;
+	padding-left: 30px;
+}
+
+.date-title h4{
+	font-weight: bold;
+}
+
+.date-title .date-subtitle{
+	color: var( --e-global-color-text );
+	font-style: italic;
+	font-weight: 500;
+	margin-top: -5px;
+}
+
+.date-duration {
+	grid-column-start: 2;
+	grid-column-end: 5;
+	grid-row-start: 2;
+	grid-row-end: 2;
+	padding-left: 30px;
+	display: flex;
+	align-items: flex-end;
+}
+
+.date-duration .box{
+	background: #9B9B9B 0% 0% no-repeat padding-box;
+	border-radius: 15px;
+	color: #fff;
+	font-size: 20px;
+	font-weight: normal;
+	line-height: 24px;
+	padding: 3px 9px 3px 9px;
+	width: fit-content;
+	letter-spacing: 0px;
+	margin-right: 20px;
+}
+
+.date-duration .start{
+	margin-top: 0;
+	margin-right: 10px;
+	overflow-wrap: break-word;
+	text-transform: uppercase;
+	box-sizing: border-box;
+}
+
+.date-duration .arrow{
+	/* color: var(--e-global-color-secondary); */
+	/* font-size: 42px; */
+	text-transform: uppercase;
+	margin: 0 10px 0 0;
+	/* transform: scale(2); */
+}
+
+.date-duration .end{
+	box-sizing: border-box;
+	margin-top: 0;
+	overflow-wrap: break-word;
+	text-transform: uppercase;
+}
+
+.date-access {
+	grid-column-start: 5;
+	grid-column-end: 5;
+	grid-row-start: 1;
+	grid-row-end: 1;
+	text-align: right;
+}
+
+.date-access .attendance-type{
+	text-align: right;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: #55B6B2;
+	text-transform: uppercase;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.date-access .date-level{
+	margin-top: 9px;
+}
+
+.date-access .status{
+	display: inline-block;
+	margin-top: 9px;
+}
+
+/* .date-access .attendance-type .ivy-red{
+	color: var(--e-global-color-8f4c73e);
+	text-decoration: line-through;
+} */
+
+.date-access .attendance-type .ivy-full{
+	color: var(--e-global-color-8f4c73e);
+}
+
+.date-access .attendance-type .ivy-canceled{
+	color: var(--e-global-color-8f4c73e);
+	text-decoration: line-through;
+}
+
+.date-access .canceled, .date-access .fully_booked{
+	text-align: right;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0px;
+	color: var(--e-global-color-8f4c73e);
+	text-transform: uppercase;
+	border-style: solid;
+	border-color: var(--e-global-color-secondary);
+	padding: 3px;
+}
+
+.date-access .separator{
+	padding-left: 9px;
+	padding-right: 9px;
+}
+
+.date-button {
+	grid-column-start: 5;
+	grid-column-end: 5;
+	grid-row-start: 2;
+	grid-row-end: 2;
+	text-align: right;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+}
+
+.date-button i{
+	margin-right: 0.5em;
+}
+
+.date-button .button{
+	display: flex;
+	justify-content: center;
+	transition: all .2s ease-in-out; 
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+	color: var( --e-global-color-text );
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+/* .date-button .button:hover{
+	transform: scale(1.10);
+} */
+
+.date-button .button:hover a{
+	color: var( --e-global-color-primary);
+}
+
+.date-button .button a:link,.date-button a:visited{
+	color: var(--e-global-color-text);
+}
+
+.date-button .button a:hover{
+	color: var( --e-global-color-primary);
+	text-decoration: none;
+}
+
+.date-button .button .icon{
+	color: var(--e-global-color-primary);
+	letter-spacing: -1px;
+	font-size: 24px;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+}
+
+/*
+	breakpoints for responsiveness
+*/
+
+@media (min-width: 1025px) {
+	.event-details{
+		display: none;
+	}
+}
+
+@media (max-width: 1024px) {
+	
+	.agenda-content{
+		display: block;
+	}
+
+	.sidebar-content {
+		float: none;
+		position: relative;
+		width: 100%;
+		padding-right: 0;
+		top: 0;
+	}
+	.sidebar-content .ivy-agenda-search-form{
+		max-width: 100%;
+	}
+	.sidebar-content .sidebar-headline{
+		text-align: center;
+	}
+	.page-content {
+		float: none;
+		width: 100%;
+		padding-top: 10px;
+	}
+	.ivy-agenda-search-form{
+		max-width: 400px;
+		margin: auto;
+	}
+	.event-details{
+		display: block;
+	}
+	.sd-filters{
+		display: flex;
+		justify-content: center;
+		flex-direction: row;
+	}
+	.lg-details{
+		margin: 0 10px 0 10px;
+		min-width: 200px;
+	}
+	.filter-attendance-type{
+		display: flex;
+		justify-content: center;
+		flex-direction: row;
+	}
+	.cbox-online{
+		padding-right: 50px;
+	}
+	.filter-attendance-type{
+		padding-bottom: 10px;
+	}
+	.filter-reset {
+		text-align: center;
+	}
+}
+
+@media (max-width: 700px) {
+	.sidebar-content .sidebar-headline{
+		text-align: left;
+	}
+	.sd-filters{
+		flex-direction: column
+	}
+	.date-start{
+		grid-column-start: 1;
+		grid-column-end: 1;
+		grid-row-start: 1;
+		grid-row-end: 1;
+		margin-bottom: 15px;
+	}
+	.date-title {
+		grid-column-start: 2;
+		grid-column-end: 6;
+		grid-row-start: 1;
+		grid-row-end: 1;
+		padding-left: 30px;
+	}
+	.date-duration {
+		grid-column-start: 1;
+		grid-column-end: 6;
+		grid-row-start: 2;
+		grid-row-end: 2;
+		padding-left: 0px;
+		margin-bottom: 30px;
+	}
+	.date-access {
+		grid-column-start: 1;
+		grid-column-end: 6;
+		grid-row-start: 3;
+		grid-row-end: 3;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-bottom: 0px;
+	}
+	.date-button {
+		grid-column-start: 1;
+		grid-column-end: 6;
+		grid-row-start: 4;
+		grid-row-end: 4;
+		margin: 15px 0 15px 0;
+	}
+	.date-access .status{
+		margin-top: -4px;
+	}
+	.date-access .date-level{
+		margin-top: 0;
+		margin-bottom: 9px;
+
+	}
+	.date-access .attendance-type{
+		margin-bottom: 9px;
+	}
+	.date-duration .box{
+		margin-right: 0;
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+@media (max-width: 450px) {
+	.date-title{
+		
+		padding-left: 0;
+		margin-left: -35px;
+	}
+	.date-title h4{
+		font-size: 20px!important;
+		margin-bottom: 12px;
+	}
+	.date-subtitle{
+		font-size: 16px;
+	}
+	.date-box{
+		height: 80px;
+		width: 80px;
+	}
+	.date-box .day{
+		font-size: 30px;
+		font-weight: 500;
+		padding: 0;
+		margin-bottom: 6px;
+	}
+	.date-box .month{
+		font-size: 20px;
+		font-weight: 600;
+	}
+	.date-duration{
+		margin-bottom: 15px;
+	}
+	.date-duration .box{
+		font-size: 16px;
+	}
+	.date-access{
+		margin-bottom: 0;
+	}
+	.date-access .attendance-type, .date-access .canceled, .date-access .fully_booked{
+		font-size: 16px;
+		margin-bottom: 9px;
+	}
+	.date-button{
+		margin-bottom: 0;
+	}
+	.date-button .button{
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 350px) {
+	.filter-attendance-type{
+		flex-direction: column;
+	}
+	.cbox-online{
+		padding-right: 0;
+	}
+	.cbox-online, .cbox-onsite{
+		margin: 0 0 0 10px;
+	}
+}

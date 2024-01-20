@@ -1,0 +1,107 @@
+/* 
+	Styles for agenda sidebar, taxonomy sd_txn_dates with upcoming event dates.
+	
+	@package HelloIVY
+*/
+
+/*
+	reusable elements here...
+*/
+
+/*
+	search bar styles here...
+*/
+
+.ivy-agenda-search-form {
+	padding-bottom: 30px;
+}
+
+.ivy-agenda-search-form input[type="search"]{
+	padding: 0 0 0 10px;
+}
+.ivy-agenda-search-form button{
+	padding: 0 22px 0 18px;
+}
+
+.ivy-agenda-search-form button:hover, .ivy-agenda-search-form button:focus{
+	background-color: var( --e-global-color-text );
+	color: var(--e-global-color-accent);
+}
+
+.ivy-agenda-search-form input:not(:placeholder-shown) {
+	background-color: #9cc1ba;
+}
+
+/*
+	select styles here...
+*/
+
+.lg-details label{
+	color: #818a91;
+	font-size: 16px;
+	padding-bottom: 9px;
+}
+
+.lg-details select{
+	font-family: "Montserrat", Sans-serif;
+	color: var(--e-global-color-text);
+	background-color: #eceeef;
+	border-radius: 2px;
+	border-color: #a2a2a2;
+	margin-bottom: 18px;
+}
+
+.lg-details option{
+	background: #eceeef;
+}
+
+/*
+	checkbox styles here...
+*/
+
+.cbox-onsite, .cbox-online {
+	line-height: 30px;
+}
+
+.cbox-onsite input[type="checkbox"], .cbox-online input[type="checkbox"]{
+	margin: 5px 10px 5px 10px;
+}
+
+input[type="checkbox"]{
+	float: right;
+	height: 20px;
+	width: 20px;
+	line-height: 30px;
+	accent-color: #4b9d99;
+}
+
+/* 
+	reset button styles here...
+*/
+
+.filter-reset {
+	padding: 10px 0 10px 0;
+}
+
+.filter-reset .filter-button{
+	color: var(--e-global-color-accent);
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: -1px;
+	text-transform: uppercase;
+	fill: var( --e-global-color-accent );
+	color: var( --e-global-color-accent );
+	background-color: var( --e-global-color-primary );
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	border-color: var( --e-global-color-primary );
+	padding: 5px 7px 5px 7px;
+	border-radius: 2px;
+	margin-bottom: 10px;
+	/* flex-direction: row; */
+}
+
+/*
+	breakpoints for responsiveness
+	!to be found in the CSS file of the agenda page template!
+*/
