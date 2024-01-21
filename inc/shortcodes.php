@@ -12,16 +12,23 @@ defined( 'ABSPATH' ) or die ( 'not allowed to access this file' );
  */
 use Inc\Utils\TemplateUtils as Utils;
 
+const SD_CATEGORIES_PARENT_LABEL_ID = 1;
+
 /**
  * Shortcode function for agenda widget
- * e.g. [ivy-widget-agenda category="31" show_current="true"]
- * @param mixed $atts - ['category´] (category_id), ['show_current'] (boolean, default: false)
- * @return string|false 
+ * e.g. [sd-widget-agenda show_filters=1 category=44 limit=3]
+ * @param array $atts - Optional - ['show_filters', 'category´, 'show_current', 'limit']
+ * @return string - Rendered seminar list as HTML
  */
-function ivy_widget_agenda( $atts ) {
-	$atts = shortcode_atts ( array(
-	), $atts);
-
+function sd_widget_agenda( $atts ) {
+	$atts = shortcode_atts ([
+      'show_filters' => 0, // Show category filter for visitor? boolean, default: false
+      'show_current' => 1, // Show running seminars? boolean, default: true
+      'category' => 0, // Filter by category (SeminarDesk Label ID)? integer, 0 (=show all)
+      'limit' => 0, // Limit number of items in list? integer, default: 0 (=no limit)
+	], $atts);
+  $category = $atts['category'] ?: $_GET['category'] ?? 0;
+  
 	// enable output buffering
 	ob_start();
 
@@ -33,7 +40,25 @@ function ivy_widget_agenda( $atts ) {
 	?>
 	<div id="shortcode-agenda">
 		<div class="spacer"></div>
-		<div id="widget-current">
+    <?php if ($atts['show_filters']) : ?>
+      <form action="">
+				<label for="categories">Kategorie</label>
+				<select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
+					<?php
+          // Get and list categories
+          $categories = get_term_by( 'name', 'lg_id_'.SD_CATEGORIES_PARENT_LABEL_ID, 'sd_txn_labels' );
+					$child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
+					echo '<option value="all">Kategorie (Alle)</option>';
+					foreach ( $child_categories_id as $child_category_id ){
+						$term_category = get_term( $child_category_id );
+						echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
+					}
+					?>
+				</select>
+			</form>
+
+    <?php endif; ?>
+		<!--<div id="widget-current">
 			<section class="splide" aria-labelledby="current-heading">
 				<h2 id="current-heading"><?php echo IVY_STRINGS['current'] ?></h2>
 				<div class="splide__track">
@@ -97,27 +122,25 @@ function ivy_widget_agenda( $atts ) {
 					</ul>
 				</div>
 			</section>
-		</div>
+		</div>-->
 		<div id="widget-upcoming">
 			<section class="splide" aria-labelledby="upcoming-heading">
 				<h2 id="upcoming-heading"><?php echo IVY_STRINGS['upcoming'] ?></h2>
 				<div class="splide__track">
 					<ul class="splide__list">
 						<?php
-            // Get dates (all or by category)
-            if (isset($attr['category']) && $attr['category'] > 0) {
-              $dates_upcoming = ivy_get_dates_upcoming_by_category($attr['category']);
-            }
-            else {
-              $dates_upcoming = ivy_get_dates_upcoming_all();
-            }
+            // Get dates
+            $dates_upcoming = ivy_get_dates_upcoming_all();
+            
             $i = 0;
             $dates_filtered = $dates_upcoming;
             foreach ( $dates_upcoming as $date ){
               if ( 
                 $date->sd_data['bookingPageStatus'] === 'hidden_on_list' || 
                 $date->sd_data['bookingPageStatus'] === 'hidden' || 
-                empty($date->sd_preview_available)
+                empty($date->sd_preview_available) || 
+                $category && !sd_date_has_category($date, $category)
+
                 ) {
                   // $is_remove = true;
                   unset ( $dates_filtered[$i] );
@@ -125,44 +148,48 @@ function ivy_widget_agenda( $atts ) {
 							$i++;
 						}
 						$dates_upcoming = $dates_filtered;
+            $count = 0;
 						foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
-              $show_current = (isset($attr['show_current']) && $attr['show_current'] == true);
-  						if( 
-                $wp_timestamp_today <= $date->sd_date_begin/1000 || // don't show current dates
-                ($show_current && $wp_timestamp_today <= $date->sd_date_end/1000)
-                ) { // don't show past dates
+  						if (
+                (
+                  // Category filter?
+                  !$category || 
+                  sd_date_has_category($date, $category)
+                ) &&
+                (
+                  // Date filter: Don't show past dates (date_begin < today)
+                  $wp_timestamp_today <= $date->sd_date_begin/1000 ||
+                  // Show current dates? (date_end < today)
+                  ($atts['show_current'] && $wp_timestamp_today <= $date->sd_date_end/1000)
+                ) && 
+                (
+                  // Limit items?
+                  ($atts['limit'] == 0 || $count < $atts['limit'])
+                )
+              ) {
+                $count++;
                 ?>
                 <li class="splide__slide">
                   <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
                     <div class="header-image">
                       <?php
                       $event = get_post( $date->wp_event_id );
-                      $img_url = Utils::get_value_by_language($event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl']);
-                      Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true);
-                      $teaser = Utils::get_value_by_language($event->sd_data['teaser']);
-//                      $labels = get_post_meta( $event->ID );
-                      $labels = get_post_meta(433);
-//                      $labels = get_post_meta( $date->wp_event_id , 'labels', false );
-//                      $labels = get_post_meta( $date->wp_event_id , 'labels', true );
+                      $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
+                      Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
+                      $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
+                      $date_categories = get_the_terms($date, 'sd_txn_labels');
                       ?>
                     </div>
                     <div class="content">
                       <h2 class="title">
-                        <?php echo $date->post_title; ?>
+                        <?= $date->post_title; ?>
                       </h2>
-                      <textarea style="display: none;" cols="40" rows="4"><?= json_encode($date->wp_event_id); ?></textarea>
-                      <textarea style="display: none;" cols="40" rows="4"><?= json_encode($event); ?></textarea>
-                      <textarea style="display: none;" cols="40" rows="4"><?= json_encode($labels); ?></textarea>
-                      <textarea style="display: none;" cols="40" rows="4"><?= json_encode($labels['sd_event_id']); ?></textarea>
-                      <textarea style="display: none;" cols="40" rows="4"><?= json_encode($labels['labels']); ?></textarea>
                       <?php
                       if( isset($date->sd_data['additionalFields']['FR_Date_Subtitle']) ){
                         ?>
                         <h2 class="subtitle">
-                          <?php
-                          echo wp_strip_all_tags($date->sd_data['additionalFields']['FR_Date_Subtitle']);
-                          ?>
+                          <?= wp_strip_all_tags($date->sd_data['additionalFields']['FR_Date_Subtitle']); ?>
                         </h2>
                       <?php
                       }
@@ -189,18 +216,18 @@ function ivy_widget_agenda( $atts ) {
                                 echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
                                 $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                                 $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo '<div><i>von ' . wp_date( $format_begin, $date_begin ) . ' à ' . wp_date( $format_end, $date_end ) . '</i></div>';
+                                echo '<div><i> von ' . wp_date( $format_begin, $date_begin ) . ' bis ' . wp_date( $format_end, $date_end ) . '</i></div>';
                               }elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
                                 echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                echo '<div><i>bis</i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
+                                echo '<div><i> bis </i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
                               }elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
                                 echo '<div>' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
                                 $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                                 $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo '<div><i>von ' . wp_date( $format_begin, $date_begin ) . ' à ' . wp_date( $format_end, $date_end ) . '</i></div>';
+                                echo '<div><i> von ' . wp_date( $format_begin, $date_begin ) . ' bis ' . wp_date( $format_end, $date_end ) . '</i></div>';
                               }else{
-                                echo '<div><i>von</i> ' . ucfirst(wp_date( 'D. d F', $date_begin )) . '</div>';
-                                echo '<div><i>bis</i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
+                                echo '<div><i> von</i> ' . ucfirst(wp_date( 'D. d F', $date_begin )) . '</div>';
+                                echo '<div><i> bis</i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
                               }
                               ?>
                             </span>
@@ -238,5 +265,5 @@ function ivy_widget_agenda( $atts ) {
 /**
  * register custom shortcodes in WordPress
  */
-add_shortcode( 'ivy-widget-agenda', 'ivy_widget_agenda');
+add_shortcode( 'sd-widget-agenda', 'sd_widget_agenda' );
 ?>

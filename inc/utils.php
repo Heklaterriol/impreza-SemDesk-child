@@ -522,8 +522,24 @@ function ivy_get_dates_upcoming_by_level(){
 }
 
 /**
+ * 
+ * @param Object $date
+ * @param integer $category_id
+ * @return boolean
+ */
+function sd_date_has_category($date, $category_id){
+  $date_categories = get_the_terms($date, 'sd_txn_labels');
+  foreach ($date_categories as $date_category) {
+    if ($date_category->term_id == $category_id) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Get Array of all current and upcoming dates with their properties depending on selected category
- * @param int $category_id (optional) 
+ * @param int $category_id (optional)
  * @return null|array Array with facilitators and their properties
  */
 function ivy_get_dates_upcoming_by_category($category_id = 0){
