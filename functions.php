@@ -60,7 +60,7 @@ function ivy_hello_enqueue_scripts()
 	// wp_localize_script('sidebar-agenda.js', 'WPVARS', array( 'siteurl' => site_url(), 'href' => home_url( $wp->request ) ));
 	}
 	global $post;
-	if( has_shortcode( $post->post_content, 'ivy-widget-agenda' ) ){ // enqueue for shortcode [ivy-widget-agenda]
+	if( has_shortcode( $post->post_content, 'sd-widget-agenda' ) ){ // enqueue for shortcode [sd-widget-agenda]
 		wp_enqueue_style( 'ivy-hello-spilde-css' );
 		wp_enqueue_script( 'ivy-hello-spilde-js' );
 		wp_enqueue_style( 'ivy-shortcode-agenda-css' );
