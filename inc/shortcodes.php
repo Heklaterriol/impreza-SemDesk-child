@@ -2,7 +2,7 @@
 /**
  * Shortcodes.
  *
- * @package HelloIVY
+ * @package HelloIVY mod
  */
 
 defined( 'ABSPATH' ) or die ( 'not allowed to access this file' );
@@ -58,76 +58,10 @@ function sd_widget_agenda( $atts ) {
 			</form>
 
     <?php endif; ?>
-		<!--<div id="widget-current">
-			<section class="splide" aria-labelledby="current-heading">
-				<h2 id="current-heading"><?php echo IVY_STRINGS['current'] ?></h2>
-				<div class="splide__track">
-					<ul class="splide__list">
-						<?php
-						$dates_current = ivy_get_dates_current();
-						foreach( $dates_current as $date ){
-							if ( 
-								$date->sd_data['bookingPageStatus'] !== 'canceled' &&
-								$date->sd_data['bookingPageStatus'] !== 'hidden_on_list' &&
-								$date->sd_data['bookingPageStatus'] !== 'hidden' &&
-								!empty($date->sd_preview_available)
-							){
-								$wp_today = wp_date('Y-m-d');
-								$wp_date_begin = wp_date( 'Y-m-d', $date->sd_date_begin/1000 );
-								$wp_date_end = wp_date( 'Y-m-d', $date->sd_date_end/1000 );
-								if( $wp_date_begin == $wp_date_end && $wp_date_end == $wp_today ){ // don't show current day event dates
-									echo null;
-								}else{
-								?>
-								<li class="splide__slide">
-									<a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
-										<div class="date">
-											<div class="float-left">
-												<h2 class="title">
-													<?php echo ucfirst($date->post_title); ?>
-												</h2>
-												<?php
-												if( isset($date->sd_data['additionalFields']['FR_Date_Subtitle']) ){
-												?>
-													<h2 class="subtitle">
-														<?php
-														echo wp_strip_all_tags($date->sd_data['additionalFields']['FR_Date_Subtitle']);
-														?>
-													</h2>
-													<?php
-												}
-												?>
-												<p class="date-end">
-													Jusqu'au 
-													<?php
-													if( $wp_today == $wp_date_end ){
-														echo 'aujourd\'hui';
-													}else{
-														echo wp_date( 'd F', $date->sd_date_end/1000 );
-													}
-													?>
-												</p>
-											</div>
-											<div class="float-right">
-												<?php echo $svg_arrow; ?>
-											</div>
-										</div>
-									</a>
-								</li>
-								<?php
-								}
-							}
-						}
-						?>
-					</ul>
-				</div>
-			</section>
-		</div>-->
 		<div id="widget-upcoming">
 			<section class="splide" aria-labelledby="upcoming-heading">
-				<h2 id="upcoming-heading"><?php echo IVY_STRINGS['upcoming'] ?></h2>
 				<div class="splide__track">
-					<ul class="splide__list">
+					<div class="splide__list">
 						<?php
             // Get dates
             $dates_upcoming = ivy_get_dates_upcoming_all();
@@ -170,9 +104,9 @@ function sd_widget_agenda( $atts ) {
               ) {
                 $count++;
                 ?>
-                <li class="splide__slide">
+                <div class="splide__slide">
                   <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
-                    <div class="header-image">
+                   <!--  <div class="header-image">
                       <?php
                       $event = get_post( $date->wp_event_id );
                       $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
@@ -181,6 +115,7 @@ function sd_widget_agenda( $atts ) {
                       $date_categories = get_the_terms($date, 'sd_txn_labels');
                       ?>
                     </div>
+                    -->
                     <div class="content">
                       <h2 class="title">
                         <?= $date->post_title; ?>
@@ -195,9 +130,10 @@ function sd_widget_agenda( $atts ) {
                       }
                       ?>
                       <div class="details">
-                        <div class="teaser">
+                     <!--   <div class="teaser">
                           <?= $teaser; ?>
                         </div>
+                        -->
                         <div class="type">
                           <?php
                           ivy_get_the_date_attendanceType( $date->sd_data );
@@ -206,45 +142,64 @@ function sd_widget_agenda( $atts ) {
                         <hr class="divider-separator">
                         <div class="duration">
                           <div class="float-left">
+                            <div  class="date">
                             <i class="fas fa-calendar-day"></i>
                             <span>
                               <?php
                               //date start to end
                               $date_begin = $date->sd_date_begin/1000;
                               $date_end = $date->sd_date_end/1000;
+                              // single day event of today
                               if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){ //ends today
                                 echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
                                 $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                                 $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo '<div><i> von ' . wp_date( $format_begin, $date_begin ) . ' bis ' . wp_date( $format_end, $date_end ) . '</i></div>';
-                              }elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
+                                echo ', <div>' . wp_date( $format_begin, $date_begin ) . ' – ' . wp_date( $format_end, $date_end ) . '</div>';
+                              }
+                              // begins today
+                              elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
                                 echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                echo '<div><i> bis </i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
-                              }elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
+                                echo ' – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
+                              }
+                               // ends today
+                              elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div>';
+                                echo ' – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                              }
+                              // single day event
+                              elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
+                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
                                 $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                                 $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo '<div><i> von ' . wp_date( $format_begin, $date_begin ) . ' bis ' . wp_date( $format_end, $date_end ) . '</i></div>';
-                              }else{
-                                echo '<div><i> von</i> ' . ucfirst(wp_date( 'D. d F', $date_begin )) . '</div>';
-                                echo '<div><i> bis</i> ' . ucfirst(wp_date( 'D. d F', $date_end )) . '</div>';
+                                echo ', <div>' . wp_date( $format_begin, $date_begin ) . ' – ' . wp_date( $format_end, $date_end ) . '/div>';
+                              }
+                              else {
+                              	
+                                if( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
+                                	echo '<div>' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                }
+                                elseif( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) ) {
+                                	echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                }
+                                else {
+                                	echo '<div>' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                }
                               }
                               ?>
                             </span>
                           </div>
-                          <div class="float-right">
-                            <?php echo $svg_arrow; ?>
                           </div>
+                          <div class="float-right"><?php echo $svg_arrow; ?></div>
                         </div>
                       </div>
                     </div>
                   </a>
-                </li>
+                </div>
                 <?php
               }
             }
 					?>
-				</ul>
+				</div>
 			</section>
 			<div class="spacer"></div>
 		</div>
