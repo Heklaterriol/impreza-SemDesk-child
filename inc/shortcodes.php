@@ -117,15 +117,18 @@ function sd_widget_agenda( $atts ) {
                     </div>
                     -->
                     <div class="content">
-                      <h2 class="title">
+                      <h3 class="title">
                         <?= $date->post_title; ?>
-                      </h2>
+                      </h3>
                       <?php
                       if( isset($date->sd_data['additionalFields']['FR_Date_Subtitle']) ){
+//                      $post_meta = get_post_meta($date->ID);
+//                      $mergedSubtitle = ($eventDate->title != $eventDate->eventDateTitle)?$eventDate->eventDateTitle:'';
+//                      $mergedSubtitle .= (!$eventDate->mergedSubtitle && $eventDate->title != $eventDate->subtitle)?$eventDate->subtitle:'';
                         ?>
-                        <h2 class="subtitle">
+                        <h4 class="subtitle">
                           <?= wp_strip_all_tags($date->sd_data['additionalFields']['FR_Date_Subtitle']); ?>
-                        </h2>
+                        </h4>
                       <?php
                       }
                       // Facilitators
@@ -147,13 +150,8 @@ function sd_widget_agenda( $atts ) {
                           <?= $teaser; ?>
                         </div>
                         -->
-                        <div class="type">
-                          <?php
-                          ivy_get_the_date_attendanceType( $date->sd_data );
-                          ?>
-                        </div>
                         <hr class="divider-separator">
-                        <div class="duration">
+                        <div class="detail-information">
                           <div class="float-left">
                             <div  class="date">
                             <i class="fas fa-calendar-day"></i>
@@ -162,29 +160,25 @@ function sd_widget_agenda( $atts ) {
                               //date start to end
                               $date_begin = $date->sd_date_begin/1000;
                               $date_end = $date->sd_date_end/1000;
+                              		$format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                              		$format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
                               // single day event of today
-                              if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){ //ends today
+                             		if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
                                 echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
                                 $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                                $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo ', <div>' . wp_date( $format_begin, $date_begin ) . ' – ' . wp_date( $format_end, $date_end ) . '</div>';
+									  echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
                               }
                               // begins today
                               elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
-                                echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                echo ' – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
+                                echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
                               }
                                // ends today
                               elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div>';
-                                echo ' – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
                               }
                               // single day event
                               elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
-                                $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                                $format_end = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                echo ', <div>' . wp_date( $format_begin, $date_begin ) . ' – ' . wp_date( $format_end, $date_end ) . '/div>';
+                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
                               }
                               else {
                               	
@@ -201,8 +195,16 @@ function sd_widget_agenda( $atts ) {
                               ?>
                             </span>
                           </div>
+                          <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>
+                              Location: <?php ivy_get_the_date_attendanceType( $date->sd_data ); ?>
+                            </span>
+                        	</div>
                           </div>
-                          <div class="float-right"><?php echo $svg_arrow; ?></div>
+                          <div class="float-right">
+                            <?php echo $svg_arrow; ?>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -88,19 +88,21 @@ button.splide__arrow:focus{
 #widget-upcoming .content{
 	display: flex;
 	flex-direction: column;
-	padding: 10px 20px;
+	padding: 20px;
 }
 
 /* #widget-upcoming .content h2.title{
 	margin: 10px 10px 0 10px;
 }*/
-/* 
-#widget-upcoming .content h2.subtitle{
-	font-weight: 800;
-	text-transform: none;
-	margin: 0 0 0 10px;
-	color: #6f6f6f;
-} */
+
+#widget-upcoming .content h3.title{
+	margin-bottom: .25rem;
+}
+
+
+#widget-upcoming .content .subtitle{
+	font-weight: normal;
+}
 
 /*#widget-upcoming .content .details{
 	width: 100%;
@@ -144,41 +146,44 @@ button.splide__arrow:focus{
 	margin: 15px auto 0px auto;
 }
 
-#widget-upcoming .content .details .duration{
+#widget-upcoming .content .details .detail-information{
 	line-height: 20px;
 	display: flex;
 	align-items: center;
-	height: 60px;
-	padding: 10px 0;
+	height: 40px;
+	padding: 10px 0 0;
 }
 
-#widget-upcoming .content .details .duration span div{
+#widget-upcoming .content .details .detail-information span div{
 	display: inline;
 }
 
-#widget-upcoming .content .details .duration .float-left{
+#widget-upcoming .content .details .detail-information .float-left{
 	display: flex;
 	float: left;
 	width: calc(100% - 30px);
 	align-items: center;
 }
 
-#widget-upcoming .content .details .duration .float-left span{
+#widget-upcoming .content .details .detail-information .float-left span{
 	padding-left: 10px;
 }
 
-#widget-upcoming .content .details .duration .float-right{
+#widget-upcoming .content .details .detail-information .float-right{
 	float: right;
 	align-self: center;
 	width: 30px;
 	text-align: end;
 }
 
-#widget-upcoming .content .details .duration .float-right svg{
+#widget-upcoming .content .details .detail-information .float-right svg{
 	height: 27px;
 	width: 27px;
 	fill: var(--e-global-color-primary);
 }
+
+#widget-upcoming .content .details .detail-information .location {padding-left: 2rem;}
+
 
 #widget-upcoming .splide__arrow{
 	top: 25%;
