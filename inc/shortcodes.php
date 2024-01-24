@@ -128,6 +128,19 @@ function sd_widget_agenda( $atts ) {
                         </h2>
                       <?php
                       }
+                      // Facilitators
+                      $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
+                      if  ( !empty( $facilitator_posts ) ) {
+                        $facilitators = [];
+                        foreach ( $facilitator_posts as $facilitator_post ){
+                          $facilitators[$facilitator_post->ID] = $facilitator_post->post_title;
+                        }
+                        ?>
+                        <div class="facilitators">
+                          <?= implode(', ', $facilitators); ?>
+                        </div>
+                        <?php
+                      }
                       ?>
                       <div class="details">
                      <!--   <div class="teaser">

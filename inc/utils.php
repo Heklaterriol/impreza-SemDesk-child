@@ -530,11 +530,11 @@ function ivy_get_dates_upcoming_by_level(){
 function sd_date_has_category($date, $category){
   $date_categories = get_the_terms($date, 'sd_txn_labels');
   foreach ($date_categories as $date_category) {
-    if (
-      is_numeric($category) && $date_category->term_id == $category || 
-      $date_category->slug == $category || 
-      $date_category->description  == $category
-    ) {
+    if (in_array($category, [
+        $date_category->term_id, 
+        $date_category->slug, 
+        $date_category->description
+    ])) {
       return true;
     }
   }
