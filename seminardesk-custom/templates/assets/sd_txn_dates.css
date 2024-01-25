@@ -1,0 +1,54 @@
+/* 
+css styles for template of taxonomy sd_txn_dates
+
+@package SeminardeskPlugin
+*/
+
+.sd-event {
+}
+.sd-event-container {
+	display: grid;
+	  grid-template-areas:
+		'props 	props 	props 	image'
+		'teaser teaser 	teaser 	teaser';  
+	margin: 0 1em 0 1em;
+}
+.sd-event-container img {
+	width: 100%;
+	float: left;
+	box-shadow:0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+	line-height: 50px;
+	text-align: center;
+
+}
+.sd-event-title{
+	text-align: left;
+}
+.sd-event-title h3{
+	font-size: 1.5em;
+	font-weight: 600;
+	margin: 2em 0 0.5em;
+	padding-bottom: 15px;
+}
+.sd-event-props{
+	grid-area: props;
+	margin-right: 1em;
+}
+.sd-event-props div{
+	margin: 0 0 0.5em 0;
+}
+.sd-event-teaser{
+	grid-area: teaser; 
+	text-align: justify;
+}
+.sd-event-image{
+	grid-area: image; 
+	margin-bottom: 2em;
+}
+.sd-event-more-link {
+	margin: 1em 0 0 0;
+}
+.sd-event-more-link:hover {
+	color: #000;
+	text-decoration: none;
+}

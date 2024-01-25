@@ -1,0 +1,806 @@
+/* 
+	Styles for event detail page, single post of CPT sd_cpt_event.
+	
+	@package HelloIVY
+*/
+
+/*
+	reusable elements here...
+*/
+
+.no-date {
+	padding-top: 20px;
+	font-weight: bold;
+}
+
+.ivy-animation-grow{
+	transition: all .2s ease-in-out; 
+}
+
+.ivy-animation-grow:hover{
+	transform: scale(1.1);
+}
+
+/* break row of a flex container*/
+.flex-row-break {
+	flex-basis: 100%;
+	height: 0;
+}
+
+/*
+	Accordion styles here...
+*/
+
+.event-details .text-box {
+  height: 4.5em;
+  overflow: hidden;
+  position: relative;
+}
+
+.event-details .text-box.expanded {
+  height: auto;
+}
+
+.event-details .text-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5em;
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+}
+
+.event-details .text-box.expanded::after {
+  display: none;
+}
+
+.event-details .read-more{
+	cursor: pointer;
+	display: flex;
+	transition: all .2s ease-in-out; 
+	font-family: "Montserrat", Sans-serif;
+	font-size: 20px;
+	fill: var( --e-global-color-text );
+	color: var(--e-global-color-primary);
+	text-align: right;
+	border: none;
+	background-color: #ffffff;
+	margin: -5px 0 0 15px;
+}
+
+.event-details .read-more:hover{
+	transform: scale(1.05);
+}
+
+.event-details .read-more span{
+	display: flex;
+}
+
+.event-details .read-more .icon{
+	color: var(--e-global-color-primary);
+	letter-spacing: -1px;
+	font-size: 12px;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+	align-self: center;
+}
+
+.event-details .read-more:link, .event-details .read-more:visited, .event-details .read-more:active, .event-details .read-more:focus{
+	color: var( --e-global-color-primary);
+}
+
+.event-details .read-more:hover{
+	color: var( --e-global-color-primary);
+	text-decoration: none;
+}
+
+.event-details .read-more .text{
+	font-style: normal;
+	margin-left: 0.4em;
+}
+
+.event-details a.accordion{
+	background-color: #f1f1f1;
+	padding: 18px 18px 10px 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.1;
+	border: 1px solid #eee;
+	display: flex;
+}
+
+.event-details a.accordion i.fa-angle-right{
+	color: var( --e-global-color-text );
+	font-size: 20px;
+	line-height: 0.8;
+	margin-left: auto;
+	display: block;
+}
+
+.event-details a.accordion i.fa-angle-down{
+	font-size: 20px;
+	display: none;
+	margin-left: auto;
+	line-height: 0.8;
+}
+
+.event-details .box{
+	padding: 0 18px;
+	background-color: white;
+	border: 1px solid #eee;
+}
+
+.event-details .text-box {
+
+	position: relative;
+	transition: height 0.3s ease-in-out;
+}
+
+.event-details .text-box p{
+	margin-bottom: 18px;
+}
+
+.event-details .text-box p.schedule{
+	margin-top: 18px;
+}
+
+.event-short-description a{
+	word-wrap: break-word;
+}
+
+#site-content {
+	padding: 10px;
+	max-width: 1270px;
+	margin: auto;
+}
+
+.entry-header-inner img {
+	width: 100%;
+	height: 400px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.archive-title {
+	color: var(--e-global-color-text);
+	font-family: "Cormorant Garamond", Sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0px;
+	line-height: 1;
+	padding: 0 15px 0 0;
+}
+
+.divider-separator {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	/* flex-wrap: wrap; */
+	margin: 20px 0 20px 0;
+	direction: ltr;
+}
+
+.divider-separator::after {
+	display: block;
+	content: "";
+	border-bottom: 0;
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	border-top: 4px solid var(--e-global-color-secondary);
+}
+
+/* course detail link */
+
+.course-page{
+	display: flex;
+	justify-content: end;
+	padding: 0 10px 0 10px;
+	margin-top: 30px;
+}
+
+.course-page i{
+	margin-right: 0.5em;
+}
+
+.course-page .button{
+	display: flex;
+	justify-content: center;
+	transition: all .2s ease-in-out; 
+	font-family: "Montserrat", Sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+	color: var( --e-global-color-text );
+	text-align: right;
+}
+
+.course-page .button:hover{
+	transform: scale(1.05);
+}
+
+.course-page .button:hover a{
+	color: var( --e-global-color-primary);
+}
+
+.course-page .button a:link,.course-page a:visited{
+	color: var(--e-global-color-text);
+}
+
+.course-page .button a:hover{
+	color: var( --e-global-color-primary);
+	text-decoration: none;
+}
+
+.course-page .button .icon{
+	color: var(--e-global-color-primary);
+	letter-spacing: -1px;
+	font-size: 24px;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+}
+
+/* facilitator */
+.facilitators-entry {
+	margin-top: 40px;
+}
+
+.facilitators-entry h3 {
+	color: var(--e-global-color-secondary);
+	font-family: "Cormorant Garamond", Sans-serif;
+	font-size: 30px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: -0.8px;
+}
+
+.facilitators-container {
+	display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+	display: -ms-flexbox; /* TWEENER - IE 10 */
+	display: -webkit-flex; /* NEW - Chrome */
+	display: -ms-flexbox; /* OLD - Firefox -19 */
+	display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	/* margin-right: auto;
+	margin-left: auto; */
+	flex-wrap: wrap;
+	margin: 0 10px 40px 10px;
+	position: relative;
+}
+
+.facilitators-container img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center;
+	margin-bottom: 20px;
+}
+
+.facilitators-container a {
+	margin-bottom: 20px;
+}
+
+.facilitator-col {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	width: 220px;
+	flex-wrap: wrap;
+}
+
+/* dates */
+
+.dates-entry {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 30px;
+}
+
+.dates-entry h3 {
+	color: var(--e-global-color-secondary);
+	font-family: "Cormorant Garamond", Sans-serif;
+	font-size: 30px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: -0.8px;
+}
+
+.date-container {
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+	padding: 30px;
+	margin: 0 0 60px 0;
+}
+
+.date-title .date-subtitle{
+	color: var( --e-global-color-text );
+	font-style: italic;
+	font-weight: 500;
+	margin: -18px 0 18px 0;
+}
+
+.date-title h3 {
+	color: var(--e-global-color-secondary);
+	font-family: "Cormorant Garamond", Sans-serif;
+	font-size: 30px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: -0.8px;
+	margin-bottom: 25px;
+}
+
+.date-container .col {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin-bottom: 20px;
+	--ivy-element-margin-right: 10px;
+	--ivy-element-margin-left: 10px;
+}
+
+.wrap {
+	flex-wrap: wrap;
+	display: flex;
+}
+
+.date-duration .start{
+	box-sizing: border-box;
+	margin-top: 0;
+	margin-right: 10px;
+	overflow-wrap: break-word;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.date-duration .end {
+	box-sizing: border-box;
+	margin-top: 0;
+	overflow-wrap: break-word;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.date-duration .arrow {
+	color: var(--e-global-color-secondary);
+	/* font-size: 42px; */
+	text-transform: uppercase;
+	margin: 0 10px 0 0;
+	/* transform: scale(2); */
+}
+
+.date-duration .arrow .col{
+	justify-self: center;
+}
+
+.date-access {
+	overflow-wrap: break-word;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color: var(--e-global-color-secondary);
+	font-weight: 600;
+	text-transform: uppercase;
+	margin-right: var(--ivy-element-margin-right);
+}
+
+.date-level{
+	display: flex;
+	flex-wrap: wrap;
+	color: var(--e-global-color-primary);
+}
+
+.date-level div{
+	margin-right: 9px;
+}
+
+.date-status {
+	font-size: 18px;
+	font-weight: 600;
+	text-transform: uppercase;
+	background-color: var(--e-global-color-accent);
+	border-style: solid;
+	border-width: 2px 2px 2px 2px;
+	border-color: var(--e-global-color-secondary);
+	border-radius: 0px 0px 0px 0px;
+	padding: 5px 10px 5px 10px;
+	margin-top: 10px;
+	margin-right: var(--ivy-element-margin-right);
+}
+
+p.status-normal {
+	fill: var(--e-global-color-8f4c73e);
+	color: var(--e-global-color-8f4c73e);
+}
+
+p.status-limited {
+	fill: var(--e-global-color-primary);
+	color: var(--e-global-color-primary);
+}
+
+.status-fully_booked {
+	fill: var(--e-global-color-8f4c73e);
+	color: vvar(--e-global-color-8f4c73e);
+}
+
+.date-flexible {
+	font-size: 18px;
+	font-weight: 600;
+	text-transform: uppercase;
+	background-color: var(--e-global-color-accent);
+	border-style: solid;
+	border-width: 2px 2px 2px 2px;
+	border-color: var(--e-global-color-secondary);
+	border-radius: 0px 0px 0px 0px;
+	padding: 5px 10px 5px 10px;
+	margin-top: 10px;
+	margin-right: var(--ivy-element-margin-right);
+}
+
+.date-flexible p {
+	margin-bottom: 0;
+}
+
+.date-registrations {
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 30px;
+	gap: 20px;
+}
+
+.date-registrations .box {
+	display: grid;
+	justify-items: center;
+	/* justify-content: space-evenly; */
+	max-width: 375px;
+	/* background-color: var( --e-global-color-b355064 ); */
+	background-color: #f1f1f1;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: var(--e-global-color-70f5b5c);
+	/* transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s; */
+	/* margin: 30px 10px 0 10px; */
+	--e-column-margin-right: 50px;
+	--e-column-margin-left: 50px;
+	padding: 20px 20px 20px 20px;
+	/* height: 350px; */
+	flex: 1;
+	text-align: center;
+}
+
+.date-registrations .box h4 {
+	text-align: center;
+	font-family: "Montserrat", Sans-serif;
+	font-size: 23px;
+	font-weight: 600;
+	text-transform: uppercase;
+	line-height: 24px;
+}
+
+.date-registrations .box p {
+	margin-bottom: 30px;
+}
+
+.date-registrations .webcast {
+	margin-bottom: 15px;
+}
+
+.box a.no-reg {
+	text-align: center;
+}
+
+.registration-yes{
+	margin: 20px 0 20px 0;
+}
+
+.registration-yes [type=button]{
+	font-weight: 600;
+	text-transform: uppercase;
+	fill: var( --e-global-color-accent );
+	color: var( --e-global-color-accent );
+	background-color: var( --e-global-color-secondary );
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	border-color: var( --e-global-color-secondary );
+	padding: 7px 40px 7px 40px;
+	font-family: "Montserrat", Sans-serif;
+	font-size: 22px;
+	letter-spacing: -1px;
+	border-radius: 2px;
+}
+
+.registration-yes button.modal-button:hover{
+	color: var( --e-global-color-secondary );
+	background-color: var( --e-global-color-accent );
+}
+
+.registration-full, .registration-canceled{
+	margin: 20px 0 20px 0;
+}
+
+.registration-full a.button, .registration-canceled a.button{
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--e-global-color-8f4c73e);
+	/* background-color: var( --e-global-color-0790673 ); */
+	background-color: #d9d9d9;
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	/* border-color: var( --e-global-color-0790673 ); */
+	border-color: #d9d9d9;
+	padding: 7px 40px 7px 40px;
+	font-family: "Montserrat", Sans-serif;
+	font-size: 22px;
+	letter-spacing: -1px;
+	border-radius: 2px;
+	cursor: default;
+}
+
+.registration-full:hover a.button, .registration-canceled:hover a.button{
+	color: var(--e-global-color-8f4c73e);
+	background-color: #d9d9d9;
+	cursor: default;
+	text-decoration: none;
+}
+
+.registration-col {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	/* margin-right: auto; */
+	/* margin-left: auto; */
+	/* justify-content: center; */
+	/* position: relative; */
+	/* margin-bottom: 9px; */
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.registration-col a {
+	margin: 15px;
+}
+
+.registration-col .webcast img {
+	height: 70px;
+	max-width: auto;
+}
+
+.registration-no{
+	margin: 10px 0 20px 0;
+}
+
+.registration-no a.button{
+	color: var(--e-global-color-accent);
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+	fill: var( --e-global-color-accent );
+	color: var( --e-global-color-accent );
+	background-color: var( --e-global-color-primary );
+	border-style: solid;
+	border-width: 3px 3px 3px 3px;
+	border-color: var( --e-global-color-primary );
+	padding: 5px 8px 5px 8px;
+	border-radius: 2px;
+	margin-bottom: 10px;
+	/* flex-direction: row; */
+}
+
+.registration-no:hover a.button{
+	color: var( --e-global-color-primary );
+	background-color: var( --e-global-color-accent );
+	text-decoration: none;
+}
+
+.agenda-page{
+	display: flex;
+	justify-content: end;
+	padding: 1em 1em 2em 0;
+}
+
+.agenda-page .button{
+	display: flex;
+	justify-content: center;
+	transition: all .2s ease-in-out; 
+	font-family: "Montserrat", Sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+	color: var( --e-global-color-text );
+	text-align: right;
+}
+
+.agenda-page .button:hover{
+	transform: scale(1.1);
+}
+
+.agenda-page .button:hover a{
+	color: var( --e-global-color-primary);
+}
+
+.agenda-page .button a:link,.agenda-page a:visited{
+	color: var(--e-global-color-text);
+}
+
+.agenda-page .button a:hover{
+	color: var( --e-global-color-primary);
+	text-decoration: none;
+}
+
+.agenda-page .button i{
+	margin-left: 0.5em;
+	font-size: 33px;
+	line-height: 24px;
+	color: var(--e-global-color-primary);
+	letter-spacing: -1px;
+	font-size: 33px;
+	text-transform: uppercase;
+	fill: var( --e-global-color-text );
+}
+
+/* tablet breakpoint */
+@media (max-width: 1024px) {
+	/* .date-registrations{
+		flex-direction: column;
+		align-items: center;
+	} */
+	/* .date-registrations .box{
+		height: 350px
+	} */
+}
+
+/* breakpoint for facilitators container */
+@media (max-width: calc(470px + 50px)) {
+	/* .facilitators-container {
+		flex-direction: column;
+	} */
+	.facilitator-col {
+		/* margin: auto; */
+		width: auto;
+		max-width: none;
+	}
+}
+
+/* breakpoint for date duration container */
+@media (max-width: 365px) {
+	.date-duration .wrap{
+		flex-direction: column;
+	}
+	.date-start {
+		margin:0;
+	}
+	.date-arrow {
+		margin: 10px auto 10px auto;
+	}
+}
+
+/* breakpoint for date registration container  */
+@media (max-width: 700px) {
+	/* .date-registrations{
+		flex-direction: column;
+		align-items: center;
+	}  */
+	/* .date-registrations .box{
+		flex: 0 0 auto;
+		min-height: 350px;
+		padding: 20px 20px 20px 20px;
+	} */
+	.registration-yes [type=button]{
+		padding: 7px 20px 7px 20px;
+	}
+}
+@media (max-width: 600px) {
+	.date-registrations{
+		flex-direction: column;
+		align-items: center;
+	} 
+	.date-registrations .box{
+		flex: 0 0 auto;
+		min-height: 350px;
+		padding: 20px 20px 20px 20px;
+	}
+	.registration-yes [type=button]{
+		padding: 7px 40px 7px 40px;
+	}
+}
+@media (max-width: 400px) {
+	.registration-yes [type=button]{
+		padding: 7px 20px 7px 20px;
+	}
+}
+
+/* BEGIN Multi-Modal */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Sit on top */
+	padding-top: 80px; /*Location of the box*/
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 90%;
+	height: 90%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s
+}
+
+.iframe-sd-booking {
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	border: none
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
+}
+@keyframes animatetop {
+	from {top:-300px; opacity:0}
+	to {top:0; opacity:1}
+}
+
+.close {
+	color: var( --e-global-color-text );
+	float: right;
+	transition: all .2s ease-in-out;
+	font-size: 35px;
+	font-weight: bold;
+	padding-top: 18px;
+	padding-right: 5px;
+	cursor: pointer;
+}
+
+.close:hover, .close:focus {
+	/* color: var( --e-global-color-secondary ); */
+	/* color: darkgray; */
+	text-decoration: none;
+	transform: scale(1.2);
+}
+
+.modal-header {
+	padding: 2px 16px;
+	background-color: #f1f1f1;
+	color: white;
+}
+
+.modal-header h2{
+	padding: 10px 0 10px 0;
+	margin: auto;
+}
+
+.modal-body {
+	height:calc(100% - 40px);
+}
+
+.modal-footer {
+	padding: 2px 16px;
+	background-color: #f1f1f1;
+	color: white;
+}
+/* BEGIN Multi-Modal */
