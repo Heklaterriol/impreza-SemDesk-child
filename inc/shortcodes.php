@@ -39,7 +39,6 @@ function sd_widget_agenda( $atts ) {
 	$svg_arrow = '<div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></div>'
 	?>
 	<div id="shortcode-agenda">
-		<div class="spacer"></div>
     <?php if ($atts['show_filters']) : ?>
       <form action="">
 				<label for="categories">Kategorie</label>
@@ -216,7 +215,6 @@ function sd_widget_agenda( $atts ) {
 					?>
 				</div>
 			</section>
-			<div class="spacer"></div>
 		</div>
 	</div>
 
