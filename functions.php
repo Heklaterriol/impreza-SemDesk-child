@@ -28,6 +28,13 @@ define(
 		'upcoming'	=> 'kommende',
 		'today'			=> 'heute',
 		'noresult'	=> 'Kein Resultat',
+    'status'    => [
+      'available' => 'Plätze frei',
+      'canceled' => 'Abgesagt',
+      'fully_booked' => 'Ausgebucht',
+      'limited' => 'Fast ausgebucht',
+      'wait_list' => 'Warteliste',
+    ],
 	)
 );
 

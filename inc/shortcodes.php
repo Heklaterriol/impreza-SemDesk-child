@@ -82,6 +82,7 @@ function sd_widget_agenda( $atts ) {
 						}
 						$dates_upcoming = $dates_filtered;
             $count = 0;
+            
 						foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
   						if (
@@ -102,34 +103,52 @@ function sd_widget_agenda( $atts ) {
                 )
               ) {
                 $count++;
+                
+                $event = get_post( $date->wp_event_id );
+                
+                // Get title and subtitles
+                $event_title = $event->sd_data['title'][0]['value'];
+                $event_subtitle = $event->sd_data['subtitle'][0]['value'];
+                $date_title = $date->post_title;
+                
+                // Get venue
+                $venue = $date->sd_data['venue'];
+                $venue_address = implode(', ', array_filter([
+                  $venue['name'], 
+//                  $venue['street1'], 
+//                  $venue['street2'], 
+                  $venue['city'], 
+                  $venue['country']
+                ]));
+                
+                // Get status
+                $booking_status = $date->sd_data['bookingPageStatus'];
+                $booking_status_label = IVY_STRINGS['status'][$booking_status]??ucwords($booking_status);
                 ?>
                 <div class="splide__slide">
                   <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
                    <!--  <div class="header-image">
                       <?php
-                      $event = get_post( $date->wp_event_id );
                       $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
                       Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
                       $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
-                      $date_categories = get_the_terms($date, 'sd_txn_labels');
+//                      $date_categories = get_the_terms($date, 'sd_txn_labels');
                       ?>
                     </div>
                     -->
                     <div class="content">
-                      <h3 class="title">
-                        <?= $date->post_title; ?>
-                      </h3>
-                      <?php
-                      if( isset($date->sd_data['additionalFields']['FR_Date_Subtitle']) ){
-//                      $post_meta = get_post_meta($date->ID);
-//                      $mergedSubtitle = ($eventDate->title != $eventDate->eventDateTitle)?$eventDate->eventDateTitle:'';
-//                      $mergedSubtitle .= (!$eventDate->mergedSubtitle && $eventDate->title != $eventDate->subtitle)?$eventDate->subtitle:'';
-                        ?>
+                      <h3 class="title"><?= wp_strip_all_tags($event_title); ?></h3>
+                      <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
                         <h4 class="subtitle">
-                          <?= wp_strip_all_tags($date->sd_data['additionalFields']['FR_Date_Subtitle']); ?>
+                          <?= wp_strip_all_tags($event_subtitle); ?>
                         </h4>
+                      <?php endif; ?>
+                      <?php if ($date_title && $date_title !== $event_title && $date_title !== $event_subtitle) : ?>
+                        <h5 class="post-title">
+                          <?= wp_strip_all_tags($date_title); ?>
+                        </h5>
+                      <?php endif; ?>
                       <?php
-                      }
                       // Facilitators
                       $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
                       if  ( !empty( $facilitator_posts ) ) {
@@ -153,53 +172,56 @@ function sd_widget_agenda( $atts ) {
                         <div class="detail-information">
                           <div class="float-left">
                             <div  class="date">
-                            <i class="fas fa-calendar-day"></i>
-                            <span>
-                              <?php
-                              //date start to end
-                              $date_begin = $date->sd_date_begin/1000;
-                              $date_end = $date->sd_date_end/1000;
-                              		$format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                              		$format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                              // single day event of today
-                             		if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-									  echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
-                              }
-                              // begins today
-                              elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
-                                echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
-                              }
-                               // ends today
-                              elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                              }
-                              // single day event
-                              elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                                echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
-                              }
-                              else {
-                              	
-                                if( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
-                                	echo '<div>' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                              <i class="fas fa-calendar-day"></i>
+                              <span>
+                                <?php
+                                //date start to end
+                                $date_begin = $date->sd_date_begin/1000;
+                                $date_end = $date->sd_date_end/1000;
+                                    $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                                    $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
+                                // single day event of today
+                                  if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                  echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                                  $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                                  echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
                                 }
-                                elseif( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) ) {
-                                	echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                // begins today
+                                elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
+                                  echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
+                                }
+                                 // ends today
+                                elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                                }
+                                // single day event
+                                elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
+                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
                                 }
                                 else {
-                                	echo '<div>' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+
+                                  if( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
+                                    echo '<div>' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                  }
+                                  elseif( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) ) {
+                                    echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                  }
+                                  else {
+                                    echo '<div>' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                  }
                                 }
-                              }
-                              ?>
-                            </span>
-                          </div>
-                          <div class="location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>
-                              Location: <?php ivy_get_the_date_attendanceType( $date->sd_data ); ?>
-                            </span>
-                        	</div>
+                                ?>
+                              </span>
+                            </div>
+                            <div class="location">
+                              <?php if ($venue_address) : ?>
+                              <i class="fas fa-map-marker-alt"></i>
+                              <span><?= $venue_address ?></span>
+                              <?php endif; ?>
+                            </div>
+                            <div class="status">
+                              <span><?= $booking_status_label ?></span>
+                            </div>
                           </div>
                           <div class="float-right">
                             <?php echo $svg_arrow; ?>
