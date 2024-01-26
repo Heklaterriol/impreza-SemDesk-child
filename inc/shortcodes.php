@@ -117,6 +117,7 @@ function sd_widget_agenda( $atts ) {
                   $venue['name'], 
 //                  $venue['street1'], 
 //                  $venue['street2'], 
+//                  $venue['zip'], 
                   $venue['city'], 
                   $venue['country']
                 ]));
