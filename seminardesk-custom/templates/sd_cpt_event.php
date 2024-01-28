@@ -12,8 +12,6 @@ defined( 'ABSPATH' ) or die ( 'not allowed to access this file' );
  */
 use Inc\Utils\TemplateUtils as Utils;
 
-get_header();
-
 /**
  * parameters here...
  */
@@ -75,19 +73,9 @@ get_header();
 			the_post();
 			// loop parameters
 			?>
-			<header id="page-header" class="l-header pos_fixed bg_solid shadow_wide" itemscope="" itemtype="https://schema.org/WPHeader">
-				<div class="class="l-subheader at_middle width_full">
-					<div class="l-subheader-h">
-						<div class="l-subheader-cell at_left"></div>
-						<div class="l-subheader-cell at_center">
-					
-					</div>
-					</div>
-				</div>
-			</header>
 			<main id="page-content site-content" class="l-main" itemprop="mainContentOfPage" role="main">
 			<?php $img_url = Utils::get_value_by_language($post->sd_data['headerPictureUrl']) ?? null; ?>
-			<section class="l-section wpb_row height_huge valign_bottom parallax_fixed" id="kopf" style="background-image: url(<?php echo $img_url ?>) !important;"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
+			<section class="l-section wpb_row height_small full_height valign_bottom parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important"';} ?>"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
 			
 			<section class="l-section wpb_row us_custom_c77e16e1 height_auto with_shape">
     <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
@@ -108,27 +96,38 @@ get_header();
                                             <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
                                                 <div class="wpb_column vc_column_container">
                                                     <div class="vc_column-inner">
+                                                    <div class="title-container">
                                                         <?php
-					Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1>', true);
-					echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', true);
-					?>      
+                                             
+					$booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
+					$booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
+					
+					Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1>', true);
+					echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2></div>', false);
+					
+					if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
+						?>
+						<div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
+						<?php
+						}         
+					?>      </div><hr />
                                                     <div class="wpb_text_column">
                                                             <div class="wpb_wrapper">
-                                                                <p>
+                                                                
 					<?php
 					// TODO: for backwards compatibility - perhaps remove at a later?
 					$facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
 					if ($facilitators) {
-						?><strong>Facilitator - Event level: </strong><?php
+						?><p><strong>Facilitator - Event level: </strong></p><?php
 						echo $facilitators;
 					}
 					?>
-				</p>
-				<p>
+				
+				<div class="sd-description">
 					<?php
 					echo Utils::get_value_by_language($post->sd_data['description']);
 					?>
-				</p>
+				</div>
 				<?php
 					// get list of all dates for this event
 					$status_lib = array(
@@ -138,16 +137,15 @@ get_header();
 						'wait_list'		=> 'Warteliste',
 						'canceled'		=> 'Abgesagt',
 					);
-					$booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
-					$booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );
 					if ( $booking_list ){
 						?>
+						<div class="sd-available-dates">
 						<h4>Verfügbare Termine:</h4>
 						<?php
 						echo $booking_list;
 						if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
 							?>
-							<br><p><button class="sd-modal-booking-btn">Anmeldung</button></p>
+							<br><p><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></p>
 							<?php
 						}
 					} else {
@@ -156,6 +154,7 @@ get_header();
 						<?php
 					}
 					?>
+                                                              </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -176,7 +175,6 @@ get_header();
 			<div class="sd-modal">
 				<div class="sd-modal-content">
 					<span class="sd-modal-close-btn">&times;</span>
-					<h4 class="sd-modal-title">Anmeldung</h4>
 					<iframe class="sd-modal-booking" src="<?php echo $booking_url ?>/embed" title="Seminardesk Booking"></iframe>
 				</div>
 			</div>
