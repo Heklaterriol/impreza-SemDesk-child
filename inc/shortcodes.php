@@ -117,7 +117,6 @@ function sd_widget_agenda( $atts ) {
                   $venue['name'], 
 //                  $venue['street1'], 
 //                  $venue['street2'], 
-//                  $venue['zip'], 
                   $venue['city'], 
                   $venue['country']
                 ]));
@@ -197,7 +196,7 @@ function sd_widget_agenda( $atts ) {
                                 }
                                 // single day event
                                 elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
+                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
                                 }
                                 else {
 
