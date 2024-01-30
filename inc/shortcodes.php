@@ -380,7 +380,7 @@ function sd_widget_agenda_flex( $atts ) {
                     }
                 
                 // ################## Get event image ################## 
-                // $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
+                $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
                 // Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
                 
                 // ################## Get teaser text ################## 
@@ -391,7 +391,10 @@ function sd_widget_agenda_flex( $atts ) {
                 
                 ?>
             <div class="sd-event">
-               <a href="<?php echo get_permalink( $date->wp_event_id ); ?>" itemprop="url" target="_parent" class="box<?php if ( !empty( $facilitator_posts ) ) { echo ' .has-facilitator'; } ?>">
+               <a href="<?php echo get_permalink( $date->wp_event_id ); ?>" itemprop="url" target="_parent" class="box<?php if (!empty( $eventfacilitators ) ) { echo ' has-facilitator'; } ?><?php if (!empty( $venue['name'] ) ) { echo ' has-location'; } ?>">
+               	
+               	
+               	<div class="sd-event-image"><?php Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true ); ?></div>
                	<div class="sd-event-date">
                		<time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
             	<?php
@@ -405,22 +408,22 @@ function sd_widget_agenda_flex( $atts ) {
                                
                     // single day event of today
                     if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                    	echo '<span class="sd-event-begindate"' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</span><span class="date-separator"></span>
+                    	echo '<span class="sd-event-begindate"' . ucfirst(wp_date( 'j.n.', $date_end )) . '</span><span class="date-separator"></span>
                     	<span class="sd-event-enddate">' . $format_begin_time . '</span>';
                     }
                     else {
                        	if ( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
-                    		echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</span>';
+                    		echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.Y', $date_begin )) . '</span><span class="date-separator"> - </span>
+                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
                         }
                         elseif ( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) )
                           {
-                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</span>';
+                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.', $date_begin )) . '</span><span class="date-separator"> - </span>
+                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
                         }
                         else {
-                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</span>';
+                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.', $date_begin )) . '</span><span class="date-separator"> - </span>
+                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
                         }
                     }    
                 ?>
@@ -433,10 +436,16 @@ function sd_widget_agenda_flex( $atts ) {
              <p class="subtitle">
               <?= wp_strip_all_tags($event_subtitle); ?>
              </p>
+             <?php if ($date_title && $date_title !== $event_title && $date_title !== $event_subtitle) : ?>
+                        <p class="post-title">
+                          <?= wp_strip_all_tags($date_title); ?>
+                        </p>
+                      <?php endif; ?>
             <?php endif; ?>
         </div>
+        
         <div class="sd-event-facilitators" itemprop="organizer">
-            <?php echo '<div class="facilitators">' . $eventfacilitators .'</div>'; ?>
+            <?php if (!empty( $eventfacilitators)) { echo $eventfacilitators; } ?>
         </div>
         <div class="sd-event-categories">
             <!-- <!-- hide categories for now -->
@@ -449,6 +458,12 @@ function sd_widget_agenda_flex( $atts ) {
             Gastveranstaltung
         </div>
         -->
+        <?php if (!empty($venue['name'])) { ?>
+        	<div class="sd-event-location">
+        		<?php echo $venue['name'] . (!empty($venue['city']) ? ', ' . $venue['city'] : ''); ?>
+        	</div>
+        <?php } ?>
+        
         <div class="sd-event-location hidden" itemprop="location" itemscope="" itemtype="https://schema.org/Place">
             <span itemprop="name"><?= $venue['name'] ?></span>
             <div class="address" itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">
