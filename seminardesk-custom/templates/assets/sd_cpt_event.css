@@ -72,6 +72,8 @@ css styles for single template of CPT sd_cpt_event
 	width: 100%;
 }
 
+.title-container {display: flex;}
+
 .title-container .float-left{
 	float: left;
 	width: calc(100% - 200px)
@@ -83,8 +85,6 @@ css styles for single template of CPT sd_cpt_event
 	text-align: right;
 	margin-left: 10px;
 }
-
-.title-container {display: flex;}
 
 @media only screen and (max-width: 600px) {
 
@@ -117,3 +117,5 @@ css styles for single template of CPT sd_cpt_event
   background-attachment:fixed;
   background-size:cover
 }
+
+.sd-description {border-top: 1px #ebe7e7 solid; padding-top: 1rem; margin-top: 1rem}

@@ -75,7 +75,7 @@ get_header();
 			?>
 			<main id="page-content site-content" class="l-main" itemprop="mainContentOfPage" role="main">
 			<?php $img_url = Utils::get_value_by_language($post->sd_data['headerPictureUrl']) ?? null; ?>
-			<section class="l-section wpb_row height_small full_height valign_bottom parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important"';} ?>"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
+			<section class="l-section wpb_row height_small full_height valign_bottom parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important';} ?>"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
 			
 			<section class="l-section wpb_row us_custom_c77e16e1 height_auto with_shape">
     <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
@@ -102,23 +102,20 @@ get_header();
 					$booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
 					$booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
 					
-					Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1>', true);
-					echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2></div>', false);
-					
+					Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1></div>', true);
 					if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
 						?>
 						<div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
 						<?php
-						}         
-					?>      </div><hr />
-                                                    <div class="wpb_text_column">
-                                                            <div class="wpb_wrapper">
-                                                                
-					<?php
+						} ?>
+						</div>
+						<div class="wpb_text_column">
+						<div class="wpb_wrapper">
+						<?php echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false);
+					
 					// TODO: for backwards compatibility - perhaps remove at a later?
 					$facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
 					if ($facilitators) {
-						?><p><strong>Facilitator - Event level: </strong></p><?php
 						echo $facilitators;
 					}
 					?>
