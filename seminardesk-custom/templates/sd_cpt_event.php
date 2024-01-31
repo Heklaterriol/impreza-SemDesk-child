@@ -64,110 +64,115 @@ get_header();
 /**
  * main code here...
  */
-
 ?>
-	<?php
-	// loop
-	if (have_posts()) {
-		while (have_posts()) {
-			the_post();
-			// loop parameters
-			?>
-			<main id="page-content site-content" class="l-main" itemprop="mainContentOfPage" role="main">
+<main id="page-content site-content" class="l-main" itemprop="mainContentOfPage" role="main">
+<?php
+// loop
+if (have_posts()) {
+  while (have_posts()) {
+    the_post();
+    // loop parameters
+    ?>
 			<?php $img_url = Utils::get_value_by_language($post->sd_data['headerPictureUrl']) ?? null; ?>
 			<section class="l-section wpb_row height_small full_height valign_bottom parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important';} ?>"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
 			
 			<section class="l-section wpb_row us_custom_c77e16e1 height_auto with_shape">
-    <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
+        <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
             <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
-        </svg>
-    </div>
-    <div class="l-section-h i-cf">
-        <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
-            <div class="wpb_column vc_column_container">
-                <div class="vc_column-inner">
-                    <div class="g-cols wpb_row us_custom_ac3998c6 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
-                        <div class="wpb_column vc_column_container us_custom_5cd26a65">
-                            <div class="vc_column-inner">
-                                <div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
-                                    <section class="l-section wpb_row height_small full_height valign_top parallax_fixed">
-                                        <div class="l-section-h i-cf">
-                                            <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
-                                                <div class="wpb_column vc_column_container">
-                                                    <div class="vc_column-inner">
-                                                    <div class="title-container">
-                                                        <?php
-                                             
-					$booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
-					$booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
-					
-					Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1></div>', true);
-					if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
-						?>
-						<div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
-						<?php
-						} ?>
-						</div>
-						<div class="wpb_text_column">
-						<div class="wpb_wrapper">
-						<?php echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false);
-					
-					// TODO: for backwards compatibility - perhaps remove at a later?
-					$facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
-					if ($facilitators) {
-						echo $facilitators;
-					}
-					?>
-				
-				<div class="sd-description">
-					<?php
-					echo Utils::get_value_by_language($post->sd_data['description']);
-					?>
-				</div>
-				<?php
-					// get list of all dates for this event
-					$status_lib = array(
-						'available'		=> 'Anmeldung',
-						'fully_booked'	=> 'Ausgebucht',
-						'limited'		=> 'besondere Anmeldebdingungen',
-						'wait_list'		=> 'Warteliste',
-						'canceled'		=> 'Abgesagt',
-					);
-					if ( $booking_list ){
-						?>
-						<div class="sd-available-dates">
-						<h4>Verfügbare Termine:</h4>
-						<?php
-						echo $booking_list;
-						if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
-							?>
-							<br><p><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></p>
-							<?php
-						}
-					} else {
-						?>
-						<h4>Keine Daten verfügbar für diese Veranstaltung :(</h4>
-						<?php
-					}
-					?>
-                                                              </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </svg>
         </div>
-    </div>
-</section>
+        <div class="l-section-h i-cf">
+          <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
+            <div class="wpb_column vc_column_container">
+              <div class="vc_column-inner">
+                <div class="g-cols wpb_row us_custom_ac3998c6 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
+                  <div class="wpb_column vc_column_container us_custom_5cd26a65">
+                    <div class="vc_column-inner">
+                      <div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
+                        <section class="l-section wpb_row height_small full_height valign_top parallax_fixed">
+                          <div class="l-section-h i-cf">
+                            <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
+                              <div class="wpb_column vc_column_container">
+                                <div class="vc_column-inner">
+                                  <div class="title-container">
+                                    <?php
+                                    // get list of all dates for this event
+                                    $status_lib = [
+                                      'available'		=> 'Anmeldung',
+                                      'fully_booked'	=> 'Ausgebucht',
+                                      'limited'		=> 'besondere Anmeldebdingungen',
+                                      'wait_list'		=> 'Warteliste',
+                                      'canceled'		=> 'Abgesagt',
+                                    ];
+//                                    $booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
+                                    $booking_list = ivy_get_event_dates_list( $post->sd_event_id, $status_lib );
+                                    $booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
+
+                                    Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1></div>', true);
+                                    ?>
+                                  </div>
+                                  <div class="wpb_text_column">
+                                  <div class="wpb_wrapper">
+                                    <?php echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false);
+
+                                    // TODO: for backwards compatibility - perhaps remove at a later?
+                                    $facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
+                                    if ($facilitators) {
+                                      echo $facilitators;
+                                    }
+                                    ?>
+
+                                    <div class="sd-description">
+                                      <?php
+                                      echo Utils::get_value_by_language($post->sd_data['description']);
+                                      ?>
+                                    </div>
+                                    <?php
+                                      if ( $booking_list ){
+                                        ?>
+                                        <div class="sd-available-dates">
+                                          <h4>Verfügbare Termine:</h4>
+                                          <?php 
+                                          foreach( $booking_list as $date ) { ?>
+                                            <div classs="sd-date">
+                                              <?= $date['title'] ?><br>
+                                              <?= $date['date'] ?><br>
+                                              <?= $date['facilitators'] ?><br>
+                                              <?= $date['price'] ?>
+                                              <?= $date['status_msg'] ?>
+                                              <?= $date['venue'] ?>
+                                            </div>
+                                          <?php
+                                          }
+                                          if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) { ?>
+                                            <div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
+                                            <br><p><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></p>
+                                            <?php
+                                          }
+                                        } else {
+                                          ?>
+                                          <h4>Keine Daten verfügbar für diese Veranstaltung :(</h4>
+                                          <?php
+                                        }
+                                        ?>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 			<!-- BEGIN modal content -->
 			<div class="sd-modal">
 				<div class="sd-modal-content">

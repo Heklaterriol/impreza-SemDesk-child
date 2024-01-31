@@ -12,6 +12,7 @@ defined( 'ABSPATH' ) or die ( 'not allowed to access this file' );
  */
 use Inc\Utils\TemplateUtils as Utils;
 
+// Where to find all labels that represent event categories in SeminarDesk
 const SD_CATEGORIES_PARENT_LABEL_ID = 1;
 
 /**

@@ -143,6 +143,99 @@ function ivy_get_facilitators( array $sd_ids ){
 }
 
 /**
+ * **** Copied & modified from /wp-content/plugins/de.seminardesk.wordpress/inc/Utils/ **** 
+ * Retrieves or displays a html markup list of defined number upcoming event dates for an event
+ * 
+ * @param int $event_id (Required) WordPress ID of the Event.
+ * @param array $status_lib (Optional) define custom strings for event date ['bookingPageStatus']. Default value: array('available' => 'available', 'fully_booked => 'fully_booked', 'limited' => 'limited', 'wait_list' => 'wait_list')
+ * @param int $number_dates (Optional) number of upcoming event dates showing in the list. Default value: -1 // all event dates
+ * @param string $date_begin_format (Optional) PHP date format for begin of event date. Default format: 'D. d.m.Y H:i'
+ * @param string $date_end_format (Optional) PHP date format end of event date. Default format: 'D. d.m.Y H:i'
+ * @param string $before  (Optional) HTML markup prepend to the event dates list (e.g. '<div class= "**custom-class*">'). Default value: ''
+ * @param string $after (Optional) HTML markup append to event dates list (e.g. '</div>'). Default value: ''
+ * @param boolean $echo (Optional) Whether to echo the date or return it. Default value: false
+ * @return string|null HTML markup of event date list
+ * 
+ * Note: 
+ * 	- PHP date format parameter string https://www.php.net/manual/en/datetime.format.php
+ */
+function ivy_get_event_dates_list( $event_id, $status_lib = null, $number_dates = -1 , $date_begin_format = '', $date_end_format = '', $before = '', $after = '' , $echo = false )
+{
+  $timestamp_today = strtotime(wp_date('Y-m-d'));
+  // $timestamp_today = strtotime('2020-04-01'); // for debugging
+  $custom_query = new WP_Query(
+    array(
+      'post_type'			=> 'sd_cpt_date',
+      'post_status'		=> 'publish',
+      'posts_per_page'	=> $number_dates,
+      'meta_key'	  		=> 'sd_date_begin',
+      'orderby'			=> 'meta_value_num',
+      'order'		 		=> 'ASC',
+      'meta_query'		=> array(
+        'relation'		=> 'AND',
+        'condition1'	=> array(
+          'key'		=> 'sd_date_begin',
+          'value'		=> $timestamp_today*1000, //in ms
+          'type'		=> 'NUMERIC',
+          'compare'	=> '>=',
+        ),
+        'condition2'	=> array(
+          'key'		=> 'sd_event_id',
+          'value'		=> $event_id,
+          'type'		=> 'CHAR',
+          'compare'	=> '=',
+        ),
+      ),
+    )
+  );
+  $date_posts = $custom_query->get_posts();
+  $dates = array();
+  $dates_html = array();
+  if ( $custom_query->have_posts() ){
+    foreach ( $date_posts as $date_post) {
+      $date = Utils::get_date_span( $date_post->sd_date_begin, $date_post->sd_date_end, $date_begin_format, $date_end_format );
+      // rtrim() or wp_strip_all_tags...
+      $title = wp_strip_all_tags($date_post->post_title);
+      $price = wp_strip_all_tags(Utils::get_value_by_language($date_post->sd_data['priceInfo']));
+      $status = $date_post->sd_data['bookingPageStatus'];
+      if ( empty( $status_lib ) ){
+        $status_lib = array(
+          'available'		=> 'available',
+          'fully_booked'	=> 'fully_booked',
+          'limited'		=> 'limited',
+          'wait_list'		=> 'wait_list',
+        );
+      }
+
+      $facilitators = Utils::get_facilitators($date_post->sd_data['facilitators']);
+      $status_msg = $status_lib[$status];
+      $venue_props = $date_post->sd_data['venue'];
+      // Remove 1st element (id) from array (fixing bug from seminardesk plugin)
+      if (array_key_exists('id', $venue_props)) { unset($venue_props['id']); }
+      $venue = Utils::get_venue($venue_props);
+
+      $date_props = [
+          'title' => $title, 
+          'date' => $date, 
+          'facilitators' => $facilitators, 
+          'price' => $price, 
+          'status_msg' => $status_msg, 
+          'venue' => $venue, 
+      ];
+      array_push($dates, $date_props);
+      
+      $date_html = '<li>' . $title . implode(', ', $date_props) . '</li>';
+      array_push($dates_html, $date_html);
+    }
+  }
+
+  if ( $echo && !empty($dates_html) ){
+    echo $before . '<ol>' . implode('', $dates_html) . '</ol>' . $after;
+  }
+  return $dates;
+}
+
+/**
  *  Get Array of current dates
  * @return WP_Post[]|int[]|null 
  */
