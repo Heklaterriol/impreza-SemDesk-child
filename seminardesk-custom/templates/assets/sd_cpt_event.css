@@ -21,15 +21,21 @@ css styles for single template of CPT sd_cpt_event
 }
 .sd-modal-content {
 	position: absolute;
-	top: 50%;
+	top: calc(50% + 20px);
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: white;
 	padding: 1rem 1.5rem;
-	height: 80%;
-	width: 80%;
+	height: calc(100% - 90px);
+	width: calc(100% - 20px);
 	background-color: rgb(235, 231, 231);
 }
+@media only screen and (max-width: 480px) {
+.sd-modal-content {
+	height: calc(100% - 50px);
+	width: calc(100% - 10px); }
+}
+
 .sd-modal-title{
 	position: absolute;
 	font-size: 20px;
@@ -61,6 +67,40 @@ css styles for single template of CPT sd_cpt_event
 .sd-modal-close-btn:hover {
 	background-color: darkgray;
 }
+
+.sd-booking-btn-100 {
+	width: 100%;
+}
+
+.title-container {display: flex;}
+
+.title-container .float-left{
+	float: left;
+	width: calc(100% - 200px)
+}
+
+.title-container .float-right{
+	float: right;
+	width: 200px;
+	text-align: right;
+	margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+
+.title-container .float-left{
+	float: none;
+	width: 100%
+}
+
+.title-container .float-right {
+	float: none;
+	text-align: left;
+	margin: 1rem 0;
+}
+.title-container {display: inline;}
+}
+	
 .sd-modal-show {
 	opacity: 1;
 	visibility: visible;
@@ -68,3 +108,14 @@ css styles for single template of CPT sd_cpt_event
 	transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 /* END modal popup */
+
+
+#kopf.l-section {
+  background-image:url(https://sot.datenablage.info/wp-content/uploads/2023/12/bg_home.jpg)!important;
+  background-position:top center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-size:cover
+}
+
+.sd-description {border-top: 1px #ebe7e7 solid; padding-top: 1rem; margin-top: 1rem}
