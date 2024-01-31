@@ -110,7 +110,11 @@ if (have_posts()) {
                                     $booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
 
                                     Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1></div>', true);
-                                    ?>
+                                    if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
+                                      ?>
+                                      <div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
+                                      <?php
+                                    } ?>
                                   </div>
                                   <div class="wpb_text_column">
                                   <div class="wpb_wrapper">
@@ -146,7 +150,6 @@ if (have_posts()) {
                                           <?php
                                           }
                                           if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) { ?>
-                                            <div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
                                             <br><p><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></p>
                                             <?php
                                           }
