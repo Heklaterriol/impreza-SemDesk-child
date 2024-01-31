@@ -179,10 +179,10 @@ function sd_widget_agenda( $atts ) {
                                 //date start to end
                                 $date_begin = $date->sd_date_begin/1000;
                                 $date_end = $date->sd_date_end/1000;
-                                    $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                                    $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
+                                $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                                $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
                                 // single day event of today
-                                  if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
                                   echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
                                   $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                                   echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
