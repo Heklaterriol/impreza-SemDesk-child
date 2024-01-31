@@ -354,6 +354,9 @@ function sd_widget_agenda_flex( $atts ) {
                 $event_subtitle = $event->sd_data['subtitle'][0]['value'];
                 $date_title = $date->post_title;
                 
+                $event_main_title = !empty($date->post_title) ? $date->post_title : $event->sd_data['title'][0]['value'];        
+
+                
                 // ##################Get venue ##################
                 $venue = $date->sd_data['venue'];
                 $venue_address = implode(', ', array_filter([
@@ -431,16 +434,11 @@ function sd_widget_agenda_flex( $atts ) {
             <time itemprop="endDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_end) ?>"></time>
         </div>
          <div class="sd-event-title">
-            <h4 itemprop="name"><?= wp_strip_all_tags($event_title); ?></h4>
-            <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
+            <h4 itemprop="name"><?= wp_strip_all_tags($event_main_title); ?></h4>
+            <?php if ($event_subtitle && $event_main_title !== $event_subtitle) : ?>
              <p class="subtitle">
               <?= wp_strip_all_tags($event_subtitle); ?>
              </p>
-             <?php if ($date_title && $date_title !== $event_title && $date_title !== $event_subtitle) : ?>
-                        <p class="post-title">
-                          <?= wp_strip_all_tags($date_title); ?>
-                        </p>
-                      <?php endif; ?>
             <?php endif; ?>
         </div>
         
