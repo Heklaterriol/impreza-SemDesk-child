@@ -154,7 +154,7 @@ function ivy_get_facilitators( array $sd_ids ){
  * @param string $before  (Optional) HTML markup prepend to the event dates list (e.g. '<div class= "**custom-class*">'). Default value: ''
  * @param string $after (Optional) HTML markup append to event dates list (e.g. '</div>'). Default value: ''
  * @param boolean $echo (Optional) Whether to echo the date or return it. Default value: false
- * @return string|null HTML markup of event date list
+ * @return array List of dates with list of fields ['title', 'date', 'facilitators', 'price', 'status_msg', 'venue]
  * 
  * Note: 
  * 	- PHP date format parameter string https://www.php.net/manual/en/datetime.format.php
