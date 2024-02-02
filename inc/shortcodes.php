@@ -22,47 +22,47 @@ const SD_CATEGORIES_PARENT_LABEL_ID = 1;
  * @return string - Rendered seminar list as HTML
  */
 function sd_widget_agenda( $atts ) {
-	$atts = shortcode_atts ([
+    $atts = shortcode_atts ([
       'show_filters' => 0, // Show category filter for visitor? boolean, default: false
       'show_current' => 1, // Show running seminars? boolean, default: true
       'category' => 0, // Filter by category (SeminarDesk Label ID)? integer, 0 (=show all)
       'limit' => 0, // Limit number of items in list? integer, default: 0 (=no limit)
-	], $atts);
+    ], $atts);
   $category = $atts['category'] ?: $_GET['category'] ?? 0;
   
-	// enable output buffering
-	ob_start();
+    // enable output buffering
+    ob_start();
 
-	/**
-	 * BEGIN of template code ...
-	 */
+    /**
+     * BEGIN of template code ...
+     */
 
-	$svg_arrow = '<div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></div>'
-	?>
-	<div id="shortcode-agenda">
+    $svg_arrow = '<div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></div>'
+    ?>
+    <div id="shortcode-agenda">
     <?php if ($atts['show_filters']) : ?>
       <form action="">
-				<label for="categories">Kategorie</label>
-				<select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
-					<?php
+                <label for="categories">Kategorie</label>
+                <select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
+                    <?php
           // Get and list categories
           $categories = get_term_by( 'name', 'lg_id_'.SD_CATEGORIES_PARENT_LABEL_ID, 'sd_txn_labels' );
-					$child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
-					echo '<option value="all">Kategorie (Alle)</option>';
-					foreach ( $child_categories_id as $child_category_id ){
-						$term_category = get_term( $child_category_id );
-						echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
-					}
-					?>
-				</select>
-			</form>
+                    $child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
+                    echo '<option value="all">Kategorie (Alle)</option>';
+                    foreach ( $child_categories_id as $child_category_id ){
+                        $term_category = get_term( $child_category_id );
+                        echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
+                    }
+                    ?>
+                </select>
+            </form>
 
     <?php endif; ?>
-		<div id="widget-upcoming">
-			<section class="splide" aria-labelledby="upcoming-heading">
-				<div class="splide__track">
-					<div class="splide__list">
-						<?php
+        <div id="widget-upcoming">
+            <section class="splide" aria-labelledby="upcoming-heading">
+                <div class="splide__track">
+                    <div class="splide__list">
+                        <?php
             // Get dates
             $dates_upcoming = ivy_get_dates_upcoming_all();
             
@@ -78,15 +78,15 @@ function sd_widget_agenda( $atts ) {
                 ) {
                   // $is_remove = true;
                   unset ( $dates_filtered[$i] );
-							}
-							$i++;
-						}
-						$dates_upcoming = $dates_filtered;
+                            }
+                            $i++;
+                        }
+                        $dates_upcoming = $dates_filtered;
             $count = 0;
             
-						foreach( $dates_upcoming as $date){
+                        foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
-  						if (
+                          if (
                 (
                   // Category filter?
                   !$category || 
@@ -226,22 +226,22 @@ function sd_widget_agenda( $atts ) {
                 <?php
               }
             }
-					?>
-				</div>
-			</section>
-		</div>
-	</div>
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
 
-	<?php
-	/**
-	 * End of template code ...
-	 */
+    <?php
+    /**
+     * End of template code ...
+     */
 
-	// disable output buffer
-	$return = ob_get_contents();
-	ob_end_clean();
+    // disable output buffer
+    $return = ob_get_contents();
+    ob_end_clean();
 
-	return $return;
+    return $return;
 }
 
 /**
@@ -258,45 +258,45 @@ add_shortcode( 'sd-widget-agenda', 'sd_widget_agenda' );
 
 
 function sd_widget_agenda_flex( $atts ) {
-	$atts = shortcode_atts ([
+    $atts = shortcode_atts ([
       'show_filters' => 0, // Show category filter for visitor? boolean, default: false
       'show_current' => 1, // Show running seminars? boolean, default: true
       'category' => 0, // Filter by category (SeminarDesk Label ID)? integer, 0 (=show all)
       'limit' => 0, // Limit number of items in list? integer, default: 0 (=no limit)
-	], $atts);
+    ], $atts);
   $category = $atts['category'] ?: $_GET['category'] ?? 0;
   
-	// enable output buffering
-	ob_start();
+    // enable output buffering
+    ob_start();
 
-	/**
-	 * BEGIN of template code
-	 */
+    /**
+     * BEGIN of template code
+     */
 
-	?>
-	<div class="sd-component sd-events">
-	<div class="sd-eventlist">
+    ?>
+    <div class="sd-component sd-events">
+    <div class="sd-eventlist">
     <?php if ($atts['show_filters']) : ?>
       <form action="">
-				<label for="categories">Kategorie</label>
-				<select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
-					<?php
+                <label for="categories">Kategorie</label>
+                <select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
+                    <?php
           // Get and list categories
           $categories = get_term_by( 'name', 'lg_id_'.SD_CATEGORIES_PARENT_LABEL_ID, 'sd_txn_labels' );
-					$child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
-					echo '<option value="all">Kategorie (Alle)</option>';
-					foreach ( $child_categories_id as $child_category_id ){
-						$term_category = get_term( $child_category_id );
-						echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
-					}
-					?>
-				</select>
-			</form>
+                    $child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
+                    echo '<option value="all">Kategorie (Alle)</option>';
+                    foreach ( $child_categories_id as $child_category_id ){
+                        $term_category = get_term( $child_category_id );
+                        echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
+                    }
+                    ?>
+                </select>
+            </form>
 
     <?php endif; ?>
-					
-			<?php
-			
+                    
+            <?php
+            
             // ################## Get dates ##################
             $dates_upcoming = ivy_get_dates_upcoming_all();
             
@@ -312,15 +312,15 @@ function sd_widget_agenda_flex( $atts ) {
                 ) {
                   // ################## $is_remove = true; ##################
                   unset ( $dates_filtered[$i] );
-							}
-							$i++;
-						}
-						$dates_upcoming = $dates_filtered;
+                            }
+                            $i++;
+                        }
+                        $dates_upcoming = $dates_filtered;
             $count = 0;
             
-						foreach( $dates_upcoming as $date){
+                        foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
-  						if (
+                          if (
                 (
                   // ################## Category filter? ##################
                   !$category || 
@@ -367,17 +367,19 @@ function sd_widget_agenda_flex( $atts ) {
                 // ################## Get facilitators ##################
                 $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
                 if ( !empty( $facilitator_posts ) ) {
-                	$facilitators = [];
-                	foreach ( $facilitator_posts as $facilitator_post ) {
-                		$facilitators[$facilitator_post->ID] = $facilitator_post->post_title;
+                    $facilitators = [];
+                    foreach ( $facilitator_posts as $facilitator_post ) {
+                        $facilitators[$facilitator_post->ID] = $facilitator_post->post_title;
                     }
                     $eventfacilitators = implode(', ', $facilitators);
                     }
-                
+                    
                 // ################## Get event teaser image, fallback if not set ################## 
                 $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: '/wp-content/themes/Impreza-child/assets/seminar-image-default.jpg';
+                // $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
+
                 // Utils::get_img_remote( $img_url, '', '', $alt = __('Seminar image', 'Secre of Tantra'), '', '', true );
-                
+            
                 // ################## Get teaser text ################## 
                 // $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
                 
@@ -387,15 +389,36 @@ function sd_widget_agenda_flex( $atts ) {
                 ?>
             <div class="sd-event">
                <a href="<?php echo get_permalink( $date->wp_event_id ); ?>" itemprop="url" target="_parent" class="box<?php if (!empty( $eventfacilitators ) ) { echo ' has-facilitator'; } ?><?php if (!empty( $venue['name'] ) ) { echo ' has-location'; } ?>">
-               	
-               	
-               	<div class="sd-event-image"><?php Utils::get_img_remote( $img_url, '', '', $alt = __('seminar image', 'secret of tantra'), '', '', true ); ?></div>
-               	<div class="sd-event-date">
-               		<time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
-            	<?php
-            		
+               
+               
+               <?php
+               
+               // ################## adjust image dimensions ##################  
+                $maxWidth = 300;
+                $quality = 70;
+                $originalImage = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
+                if (empty($originalImage)) { $originalImage = 'https://secret-of-tantra.seminardesk.de/Content/Extern/Termine.jpg'; }
+                list($width, $height) = getimagesize($originalImage);
+                if ($width > $maxWidth) {
+                    $newHeight = ($maxWidth / $width) * $height;
+                    $resizedImage = imagecreatetruecolor($maxWidth, $newHeight);
+                    $source = imagecreatefromjpeg($originalImage);
+                    imagecopyresampled($resizedImage, $source, 0, 0, 0, 0, $maxWidth, $newHeight, $width, $height);
+                    ob_start();
+                    imagejpeg($resizedImage, null, $quality);
+                    $imageData = ob_get_clean();
+                    echo '<div class="sd-event-image"><img decoding="async" src="data:image/jpeg;base64,'.base64_encode($imageData).'" alt="seminar image" width="'.$maxWidth.'" height="'.$newHeight.'"></div>';
+                } else {
+                    // Output the original image to the browser
+                    echo '<div class="sd-event-image"><img decoding="async" src="'.$originalImage.'" alt="seminar image" width="'.$width.'" height="'.$height.'"></div>';
+                } ?>
+                
+                <div class="sd-event-date">
+                       <time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
+                <?php
+                    
                 // ################## dates & times ################## 
-            		$date_begin = $date->sd_date_begin/1000;
+                    $date_begin = $date->sd_date_begin/1000;
                     $date_end = $date->sd_date_end/1000;
                     $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
                     $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
@@ -403,21 +426,21 @@ function sd_widget_agenda_flex( $atts ) {
                                
                     // single day event of today
                     if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                    	echo '<span class="sd-event-begindate"' . ucfirst(wp_date( 'j.n.', $date_end )) . '</span><span class="date-separator"></span>
-                    	<span class="sd-event-enddate">' . $format_begin_time . '</span>';
+                        echo '<span class="sd-event-begindate"' . ucfirst(wp_date( 'j.n.', $date_end )) . '</span><span class="date-separator"></span>
+                        <span class="sd-event-enddate">' . $format_begin_time . '</span>';
                     }
                     else {
-                       	if ( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
-                    		echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.Y', $date_begin )) . '</span><span class="date-separator"> - </span>
+                           if ( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
+                            echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.Y', $date_begin )) . '</span><span class="date-separator"> - </span>
                             <span class="sd-event-enddate"><span>' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span></span>';
                         }
                         elseif ( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) )
                           {
-                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.', $date_begin )) . '</span><span class="date-separator"> - </span>
+                            echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.', $date_begin )) . '</span><span class="date-separator"> - </span>
                             <span class="sd-event-enddate wrap">' . ucfirst(wp_date( 'j.n.', $date_end )) . '<span>' . ucfirst(wp_date( 'Y', $date_end )) . '</span></span>';
                         }
                         else {
-                        	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.', $date_begin )) . '</span><span class="date-separator"> - </span>
+                            echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.', $date_begin )) . '</span><span class="date-separator"> - </span>
                             <span class="sd-event-enddate wrap">' . ucfirst(wp_date( 'j.n.', $date_end )) . '<span>' . ucfirst(wp_date( 'Y', $date_end )) . '</span></span>';
                         }
                     }    
@@ -449,9 +472,9 @@ function sd_widget_agenda_flex( $atts ) {
         </div>
         -->
         <?php if (!empty($venue['name'])) { ?>
-        	<div class="sd-event-location">
-        		<?php echo $venue['name'] . (!empty($venue['city']) ? ', ' . $venue['city'] : ''); ?>
-        	</div>
+            <div class="sd-event-location">
+                <?php echo $venue['name'] . (!empty($venue['city']) ? ', ' . $venue['city'] : ''); ?>
+            </div>
         <?php } ?>
         
         <div class="sd-event-location hidden" itemprop="location" itemscope="" itemtype="https://schema.org/Place">
@@ -469,21 +492,21 @@ function sd_widget_agenda_flex( $atts ) {
                 <?php
               }
             }
-					?>
-			</div>
-		</div>
-	</div>
+                    ?>
+            </div>
+        </div>
+    </div>
 
-	<?php
-	/**
-	 * End of template code ...
-	 */
+    <?php
+    /**
+     * End of template code ...
+     */
 
-	// disable output buffer
-	$return = ob_get_contents();
-	ob_end_clean();
+    // disable output buffer
+    $return = ob_get_contents();
+    ob_end_clean();
 
-	return $return;
+    return $return;
 }
 
 /**
@@ -498,26 +521,26 @@ add_shortcode( 'sd-widget-agenda-flex', 'sd_widget_agenda_flex' );
  ##################################################  */
 
 function sd_widget_agenda_mini( $atts ) {
-	$atts = shortcode_atts ([
+    $atts = shortcode_atts ([
       'category' => 0, // Filter by category (SeminarDesk Label ID)? integer, 0 (=show all)
       'limit' => 0, // Limit number of items in list? integer, default: 0 (=no limit)
-	], $atts);
+    ], $atts);
   $category = $atts['category'] ?: $_GET['category'] ?? 0;
   
-	// enable output buffering
-	ob_start();
+    // enable output buffering
+    ob_start();
 
-	/**
-	 * BEGIN of template code ...
-	 */
+    /**
+     * BEGIN of template code ...
+     */
 
-	?>
-	<div id="shortcode-agenda-mini">
-		<div id="widget-upcoming">
-			<section class="splide" aria-labelledby="upcoming-heading">
-				<div class="splide__track">
-					<div class="splide__list">
-						<?php
+    ?>
+    <div id="shortcode-agenda-mini">
+        <div id="widget-upcoming">
+            <section class="splide" aria-labelledby="upcoming-heading">
+                <div class="splide__track">
+                    <div class="splide__list">
+                        <?php
             // Get dates
             $dates_upcoming = ivy_get_dates_upcoming_all();
             
@@ -533,15 +556,15 @@ function sd_widget_agenda_mini( $atts ) {
                 ) {
                   // $is_remove = true;
                   unset ( $dates_filtered[$i] );
-							}
-							$i++;
-						}
-						$dates_upcoming = $dates_filtered;
+                            }
+                            $i++;
+                        }
+                        $dates_upcoming = $dates_filtered;
             $count = 0;
             
-						foreach( $dates_upcoming as $date){
+                        foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
-  						if (
+                          if (
                 (
                   // Category filter?
                   !$category || 
@@ -624,7 +647,7 @@ function sd_widget_agenda_mini( $atts ) {
                     <br />
                     <span class="title"><strong><?= wp_strip_all_tags($event_title); ?></strong></span>
                     <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
-                 	  <span class="subtitle"> - <?= wp_strip_all_tags($event_subtitle); ?></span>
+                       <span class="subtitle"> - <?= wp_strip_all_tags($event_subtitle); ?></span>
                     <?php endif; ?>
                     <br />
                     <?php if ($venue_address) : ?>
@@ -636,21 +659,21 @@ function sd_widget_agenda_mini( $atts ) {
                 <?php
               }
             }
-					?>
-			</section>
-		</div>
-	</div>
+                    ?>
+            </section>
+        </div>
+    </div>
 
-	<?php
-	/**
-	 * End of template code ...
-	 */
+    <?php
+    /**
+     * End of template code ...
+     */
 
-	// disable output buffer
-	$return = ob_get_contents();
-	ob_end_clean();
+    // disable output buffer
+    $return = ob_get_contents();
+    ob_end_clean();
 
-	return $return;
+    return $return;
 }
 
 /**
