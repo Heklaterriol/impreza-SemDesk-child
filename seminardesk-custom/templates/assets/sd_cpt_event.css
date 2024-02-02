@@ -118,4 +118,22 @@ css styles for single template of CPT sd_cpt_event
   background-size:cover
 }
 
-.sd-description {border-top: 1px #ebe7e7 solid; padding-top: 1rem; margin-top: 1rem}
+.sd-available-dates {border-bottom: 1px #ebe7e7 solid; padding-bottom: 1rem; margin-bottom: 1rem}
+
+
+@media only screen and (min-width: 968px) {
+.sd-available-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "links rechts";
+}
+
+.grid-item-left {
+    grid-area: links;
+}
+
+.grid-item-right {
+    grid-area: rechts;
+}
+}
