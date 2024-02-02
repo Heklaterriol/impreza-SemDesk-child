@@ -383,8 +383,8 @@ function sd_widget_agenda_flex( $atts ) {
                     $eventfacilitators = implode(', ', $facilitators);
                     }
                 
-                // ################## Get event image ################## 
-                $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
+                // ################## Get event teaser image, fallback if not set ################## 
+                $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: '/wp-content/themes/Impreza-child/assets/seminar-image-default.jpg';
                 // Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
                 
                 // ################## Get teaser text ################## 
@@ -398,7 +398,7 @@ function sd_widget_agenda_flex( $atts ) {
                <a href="<?php echo get_permalink( $date->wp_event_id ); ?>" itemprop="url" target="_parent" class="box<?php if (!empty( $eventfacilitators ) ) { echo ' has-facilitator'; } ?><?php if (!empty( $venue['name'] ) ) { echo ' has-location'; } ?>">
                	
                	
-               	<div class="sd-event-image"><?php Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true ); ?></div>
+               	<div class="sd-event-image"><?php Utils::get_img_remote( $img_url, '', '', $alt = __('seminar image', 'secret of tantra'), '', '', true ); ?></div>
                	<div class="sd-event-date">
                		<time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
             	<?php
