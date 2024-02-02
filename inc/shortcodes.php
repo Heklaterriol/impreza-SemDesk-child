@@ -418,16 +418,16 @@ function sd_widget_agenda_flex( $atts ) {
                     else {
                        	if ( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
                     		echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.Y', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
+                            <span class="sd-event-enddate"><span>' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span></span>';
                         }
                         elseif ( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) )
                           {
                         	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.n.', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
+                            <span class="sd-event-enddate wrap">' . ucfirst(wp_date( 'j.n.', $date_end )) . '<span>' . ucfirst(wp_date( 'Y', $date_end )) . '</span></span>';
                         }
                         else {
                         	echo '<span class="sd-event-begindate">' . ucfirst(wp_date( 'j.', $date_begin )) . '</span><span class="date-separator"> - </span>
-                            <span class="sd-event-enddate">' . ucfirst(wp_date( 'j.n.Y', $date_end )) . '</span>';
+                            <span class="sd-event-enddate wrap">' . ucfirst(wp_date( 'j.n.', $date_end )) . '<span>' . ucfirst(wp_date( 'Y', $date_end )) . '</span></span>';
                         }
                     }    
                 ?>
