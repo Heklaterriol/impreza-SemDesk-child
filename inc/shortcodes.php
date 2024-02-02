@@ -128,15 +128,6 @@ function sd_widget_agenda( $atts ) {
                 ?>
                 <div class="splide__slide">
                   <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
-                   <!--  <div class="header-image">
-                      <?php
-                      $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
-                      Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
-                      $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
-//                      $date_categories = get_the_terms($date, 'sd_txn_labels');
-                      ?>
-                    </div>
-                    -->
                     <div class="content">
                       <h3 class="title"><?= wp_strip_all_tags($event_title); ?></h3>
                       <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
@@ -385,7 +376,7 @@ function sd_widget_agenda_flex( $atts ) {
                 
                 // ################## Get event teaser image, fallback if not set ################## 
                 $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: '/wp-content/themes/Impreza-child/assets/seminar-image-default.jpg';
-                // Utils::get_img_remote( $img_url, '', '', $alt = __('remote image', 'vajrayogini'), '', '', true );
+                // Utils::get_img_remote( $img_url, '', '', $alt = __('Seminar image', 'Secre of Tantra'), '', '', true );
                 
                 // ################## Get teaser text ################## 
                 // $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
