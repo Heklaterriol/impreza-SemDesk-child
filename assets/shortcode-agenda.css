@@ -384,8 +384,9 @@ button.splide__arrow:focus{
 }
 
 .sd-event-image {
-  width: 200px; /* Hier die Breite deines Containers eintragen */
-  height: auto; /* Hier die Höhe deines Containers eintragen */
+  width: 200px;
+  height: auto;
+  max-height: 178px;
   overflow: hidden;
 }
 
