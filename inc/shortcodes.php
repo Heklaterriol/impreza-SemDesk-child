@@ -374,12 +374,6 @@ function sd_widget_agenda_flex( $atts ) {
                     $eventfacilitators = implode(', ', $facilitators);
                     }
                     
-                // ################## Get event teaser image, fallback if not set ################## 
-                $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: '/wp-content/themes/Impreza-child/assets/seminar-image-default.jpg';
-                // $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
-
-                // Utils::get_img_remote( $img_url, '', '', $alt = __('Seminar image', 'Secre of Tantra'), '', '', true );
-            
                 // ################## Get teaser text ################## 
                 // $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
                 
@@ -393,7 +387,7 @@ function sd_widget_agenda_flex( $atts ) {
                
                <?php
                
-               // ################## adjust image dimensions ##################  
+               // ################## Get event teaser image, adjust image dimensions if width > 300px ##################  
                 $maxWidth = 300;
                 $quality = 70;
                 $originalImage = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
@@ -412,6 +406,8 @@ function sd_widget_agenda_flex( $atts ) {
                     // Output the original image to the browser
                     echo '<div class="sd-event-image"><img decoding="async" src="'.$originalImage.'" alt="seminar image" width="'.$width.'" height="'.$height.'"></div>';
                 } ?>
+                
+                <!--  ################## Get date/time ##################  -->
                 
                 <div class="sd-event-date">
                        <time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
