@@ -11,6 +11,7 @@ defined( 'ABSPATH' ) or die ( 'not allowed to access this file' );
  * includes here...
  */
 use Inc\Utils\TemplateUtils as Utils;
+require_once( get_stylesheet_directory() . '/inc/utils.php' );
 
 /**
  * parameters here...
@@ -82,35 +83,35 @@ if (have_posts()) {
 							<div class="vc_column-inner">
 								<div class="w-separator size_huge"></div>
 								<div class="w-iconbox us_custom_1fe0742c iconpos_top style_default color_custom align_center no_text no_title">
-                                	<div class="w-iconbox-icon" style="font-size: 2rem;"><i class="fas fa-chevron-double-down"></i></div>
-                                    <div class="w-iconbox-meta"></div>
-                                </div>
-                            </div>
-                            <a href="#inhalt" class="vc_column-link smooth-scroll" aria-label="Link"></a>
+                  <div class="w-iconbox-icon" style="font-size: 2rem;"><i class="fas fa-chevron-double-down"></i></div>
+                  <div class="w-iconbox-meta"></div>
+                </div>
+              </div>
+              <a href="#inhalt" class="vc_column-link smooth-scroll" aria-label="Link"></a>
 						</div>
 					</div>
 				</div>
 			</section>
 			<section class="l-section wpb_row us_custom_5e1b6e42 height_auto with_shape" id="inhalt">
-        		<div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
-                        <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
-                    </svg>
-                </div>
-                 <div class="l-section-h i-cf">
-                     <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
-                        <div class="wpb_column vc_column_container">
-                            <div class="vc_column-inner">
-                                <div class="g-cols wpb_row us_custom_59bf33fe minheight600 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
-                                    <div class="wpb_column vc_column_container us_custom_5cd26a65">
-                                        <div class="vc_column-inner">
-                                        	<div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
-                                                <section class="l-section wpb_row height_small">
-                                                    <div class="l-section-h i-cf">
-                                                        <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
-                                                            <div class="wpb_column vc_column_container">
-                                                                <div class="vc_column-inner">
-                                 									 <div class="title-container">
+        <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
+            <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
+          </svg>
+        </div>
+        <div class="l-section-h i-cf">
+          <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
+            <div class="wpb_column vc_column_container">
+              <div class="vc_column-inner">
+                <div class="g-cols wpb_row us_custom_59bf33fe minheight600 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
+                  <div class="wpb_column vc_column_container us_custom_5cd26a65">
+                    <div class="vc_column-inner">
+                      <div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
+                        <section class="l-section wpb_row height_small">
+                          <div class="l-section-h i-cf">
+                            <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
+                              <div class="wpb_column vc_column_container">
+                                <div class="vc_column-inner">
+                                  <div class="title-container">
                                     <?php
                                     // get list of all dates for this event
                                     $status_lib = [
@@ -119,6 +120,7 @@ if (have_posts()) {
                                       'limited'		=> 'besondere Anmeldebdingungen',
                                       'wait_list'		=> 'Warteliste',
                                       'canceled'		=> 'Abgesagt',
+                                      'hidden_on_list'		=> 'Ausgeblendet',
                                     ];
 //                                    $booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
                                     $booking_list = ivy_get_event_dates_list( $post->sd_event_id, $status_lib );
@@ -135,39 +137,49 @@ if (have_posts()) {
                                     } ?>
                                   </div>
                                   <div class="wpb_text_column">
-                                  <div class="wpb_wrapper">
-                                    <?php echo Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false);
-
-                                    // TODO: for backwards compatibility - perhaps remove at a later?
-                                    $facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
-                                   ?>
-                                   <?php foreach( $booking_list as $date )
-                                   		{ ?>
+                                    <div class="wpb_wrapper">
+                                      <?= Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false); ?>
+                                      <?php foreach( $booking_list as $date ) : ?>
                                         <div class="sd-available-dates">
-                                        	<div class="grid-item-left">
-                                            	<strong>Wann:</strong> <?= $date['date'] ?><br />
-                                              	<strong>Kursleitung:</strong> <?= $date['facilitators'] ?>
+                                          <div class="grid-item-left">
+                                              <strong>Wann:</strong> <?= $date['date'] ?><br />
+                                                <strong>Kursleitung:</strong> <?= $date['facilitators'] ?>
                                             </div>
                                             <div class="grid-item-right">
-                                            	<strong>Wo:</strong> <?= $date['venue'] ?><br />
-                                            	<strong>Preis:</strong> <?= $date['price'] ?>
+                                              <strong>Wo:</strong> <?= $date['venue'] ?><br />
+                                              <strong>Preis:</strong> <?= $date['price'] ?>
                                             </div>
                                         </div>
+                                      <?php endforeach; ?>
+                                      <div class="sd-description">
+                                        <?= Utils::get_value_by_language($post->sd_data['description']); ?>
+                                      </div>
+                                      <div class="sd-facilitators">
                                         <?php
-                                          }
-                                          ?>
-                                    <div class="sd-description">
-                                      <?php
-                                      echo Utils::get_value_by_language($post->sd_data['description']);
-                                      if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true )
-                                      { ?>
-                                      		<div id="registration-area"><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></div>
-                                      	<?php
-                                          } else {
-                                        ?>
-                                    <div id="registration-area"><a class="sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung direkt über die Seminarleitung</a></div>
-                                     <?php
-                                    } ?>
+                                        $facilitators = ivy_get_facilitators($post->sd_data['facilitators']);
+                                        if ( !empty( $facilitators ) ) : ?>
+                                          <?php foreach ( $facilitators as $facilitator ) : ?>
+                                            <div class="sd-facilitator">
+                                              <div class="sd-facilitator-name">
+                                                <h3><?= $facilitator->sd_data['name']; ?></h3>
+                                              </div>
+                                              <div class="sd-facilitator-picture">
+                                                <img src="<?= $facilitator->sd_data['pictureUrl'] ?>" alt="<?= $facilitator->sd_data['name'] ?>">
+                                              </div>
+                                              <div class="sd-facilitator-about">
+                                                <?= Utils::get_value_by_language($facilitator->sd_data['about']); ?>
+                                              </div>
+                                            </div>
+                                          <?php endforeach; ?>
+                                        <?php endif; ?>
+                                      </div>
+                                      <div class="sd-registration">
+                                        <?php if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) : ?>
+                                          <div id="registration-area"><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></div>
+                                        <?php else : ?>
+                                          <div id="registration-area"><a class="sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung direkt über die Seminarleitung</a></div>
+                                        <?php endif; ?>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>

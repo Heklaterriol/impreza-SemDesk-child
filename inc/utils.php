@@ -208,7 +208,7 @@ function ivy_get_event_dates_list( $event_id, $status_lib = null, $number_dates 
       }
 
       $facilitators = Utils::get_facilitators($date_post->sd_data['facilitators']);
-      $status_msg = $status_lib[$status];
+      $status_msg = $status_lib[$status]??'';
       $venue_props = $date_post->sd_data['venue'];
       // Remove 1st element (id) from array (fixing bug from seminardesk plugin)
       if (array_key_exists('id', $venue_props)) { unset($venue_props['id']); }
