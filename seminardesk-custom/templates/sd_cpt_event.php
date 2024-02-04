@@ -65,7 +65,8 @@ get_header();
  * main code here...
  */
 ?>
-<main id="page-content site-content" class="l-main" itemprop="mainContentOfPage" role="main">
+
+<main id="page-content site-content event-details" class="l-main" itemprop="mainContentOfPage" role="main">
 <?php
 // loop
 if (have_posts()) {
@@ -74,28 +75,42 @@ if (have_posts()) {
     // loop parameters
     ?>
 			<?php $img_url = Utils::get_value_by_language($post->sd_data['headerPictureUrl']) ?? null; ?>
-			<section class="l-section wpb_row height_small full_height valign_bottom parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important';} ?>"><div class="l-section-h i-cf"><div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default"><div class="wpb_column vc_column_container"><div class="vc_column-inner"><div class="w-separator size_huge"></div></div></div></div></div></section>
-			
-			<section class="l-section wpb_row us_custom_c77e16e1 height_auto with_shape">
-        <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
-            <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
-          </svg>
-        </div>
-        <div class="l-section-h i-cf">
-          <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
-            <div class="wpb_column vc_column_container">
-              <div class="vc_column-inner">
-                <div class="g-cols wpb_row us_custom_ac3998c6 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
-                  <div class="wpb_column vc_column_container us_custom_5cd26a65">
-                    <div class="vc_column-inner">
-                      <div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
-                        <section class="l-section wpb_row height_small full_height valign_top parallax_fixed">
-                          <div class="l-section-h i-cf">
-                            <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
-                              <div class="wpb_column vc_column_container">
-                                <div class="vc_column-inner">
-                                  <div class="title-container">
+			<section class="l-section wpb_row height_small full_height valign_top parallax_fixed" id="kopf" <?php if ($img_url != null) { echo 'style="background-image: url(' . $img_url . ')!important';} ?>">
+				<div class="l-section-h i-cf">
+					<div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
+						<div class="wpb_column vc_column_container us_custom_4c3b89c1 stretched has-link">
+							<div class="vc_column-inner">
+								<div class="w-separator size_huge"></div>
+								<div class="w-iconbox us_custom_1fe0742c iconpos_top style_default color_custom align_center no_text no_title">
+                                	<div class="w-iconbox-icon" style="font-size: 2rem;"><i class="fas fa-chevron-double-down"></i></div>
+                                    <div class="w-iconbox-meta"></div>
+                                </div>
+                            </div>
+                            <a href="#inhalt" class="vc_column-link smooth-scroll" aria-label="Link"></a>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="l-section wpb_row us_custom_5e1b6e42 height_auto with_shape" id="inhalt">
+        		<div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
+                        <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
+                    </svg>
+                </div>
+                 <div class="l-section-h i-cf">
+                     <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0rem;">
+                        <div class="wpb_column vc_column_container">
+                            <div class="vc_column-inner">
+                                <div class="g-cols wpb_row us_custom_59bf33fe minheight600 via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default" style="--gap: 0%;">
+                                    <div class="wpb_column vc_column_container us_custom_5cd26a65">
+                                        <div class="vc_column-inner">
+                                        	<div class="w-post-elm post_content us_custom_5cd26a65" itemprop="text">
+                                                <section class="l-section wpb_row height_small">
+                                                    <div class="l-section-h i-cf">
+                                                        <div class="g-cols vc_row via_grid cols_1 laptops-cols_inherit tablets-cols_inherit mobiles-cols_1 valign_top type_default stacking_default">
+                                                            <div class="wpb_column vc_column_container">
+                                                                <div class="vc_column-inner">
+                                 									 <div class="title-container">
                                     <?php
                                     // get list of all dates for this event
                                     $status_lib = [
@@ -114,6 +129,9 @@ if (have_posts()) {
                                       ?>
                                       <div class="float-right"><button class="sd-modal-booking-btn sd-booking-btn-top w-btn us-btn-style_4">Anmeldung</button></div>
                                       <?php
+                                    } else { ?>
+                                    <div class="float-right"><a href="#registration-area" class="w-btn us-btn-style_4">Anmeldung</a></div>
+                                    <?php
                                     } ?>
                                   </div>
                                   <div class="wpb_text_column">
@@ -122,44 +140,34 @@ if (have_posts()) {
 
                                     // TODO: for backwards compatibility - perhaps remove at a later?
                                     $facilitators = Utils::get_facilitators($post->sd_data['facilitators']);
-                                    if ($facilitators) {
-                                      echo $facilitators;
-                                    }
-                                    ?>
-
+                                   ?>
+                                   <?php foreach( $booking_list as $date )
+                                   		{ ?>
+                                        <div class="sd-available-dates">
+                                        	<div class="grid-item-left">
+                                            	<strong>Wann:</strong> <?= $date['date'] ?><br />
+                                              	<strong>Kursleitung:</strong> <?= $date['facilitators'] ?>
+                                            </div>
+                                            <div class="grid-item-right">
+                                            	<strong>Wo:</strong> <?= $date['venue'] ?><br />
+                                            	<strong>Preis:</strong> <?= $date['price'] ?>
+                                            </div>
+                                        </div>
+                                        <?php
+                                          }
+                                          ?>
                                     <div class="sd-description">
                                       <?php
                                       echo Utils::get_value_by_language($post->sd_data['description']);
-                                      ?>
-                                    </div>
-                                    <?php
-                                      if ( $booking_list ){
+                                      if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true )
+                                      { ?>
+                                      		<div id="registration-area"><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></div>
+                                      	<?php
+                                          } else {
                                         ?>
-                                        <div class="sd-available-dates">
-                                          <h4>Verfügbare Termine:</h4>
-                                          <?php 
-                                          foreach( $booking_list as $date ) { ?>
-                                            <div classs="sd-date">
-                                              <?= $date['title'] ?><br>
-                                              <?= $date['date'] ?><br>
-                                              <?= $date['facilitators'] ?><br>
-                                              <?= $date['price'] ?>
-                                              <?= $date['status_msg'] ?>
-                                              <?= $date['venue'] ?>
-                                            </div>
-                                          <?php
-                                          }
-                                          if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) { ?>
-                                            <br><p><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></p>
-                                            <?php
-                                          }
-                                        } else {
-                                          ?>
-                                          <h4>Keine Daten verfügbar für diese Veranstaltung :(</h4>
-                                          <?php
-                                        }
-                                        ?>
-                                      </div>
+                                    <div id="registration-area"><a class="sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung direkt über die Seminarleitung</a></div>
+                                     <?php
+                                    } ?>
                                     </div>
                                   </div>
                                 </div>
