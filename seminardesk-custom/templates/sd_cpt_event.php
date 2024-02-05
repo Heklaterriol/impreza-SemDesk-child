@@ -154,10 +154,11 @@ if (have_posts()) {
                                       <div class="sd-description">
                                         <?= Utils::get_value_by_language($post->sd_data['description']); ?>
                                       </div>
-                                      <div class="sd-facilitators">
                                         <?php
                                         $facilitators = ivy_get_facilitators($post->sd_data['facilitators']);
                                         if ( !empty( $facilitators ) ) : ?>
+                                      <div class="sd-facilitators">
+                                        <h2>Referent*innen</h2>
                                           <?php foreach ( $facilitators as $facilitator ) : ?>
                                             <div class="sd-facilitator">
                                               <div class="sd-facilitator-name">
@@ -171,8 +172,8 @@ if (have_posts()) {
                                               </div>
                                             </div>
                                           <?php endforeach; ?>
-                                        <?php endif; ?>
                                       </div>
+                                        <?php endif; ?>
                                       <div class="sd-registration">
                                         <?php if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) : ?>
                                           <div id="registration-area"><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></div>

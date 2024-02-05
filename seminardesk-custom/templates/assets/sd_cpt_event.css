@@ -143,6 +143,19 @@ css styles for single template of CPT sd_cpt_event
   }
 }
 
+.sd-facilitators {
+      border-top: 1px #ebe7e7 solid;
+      margin: 1rem 0 2rem;
+}
+
+.sd-facilitators h2 {
+      margin: 2rem 0 .5rem;
+}
+
+.sd-facilitator {
+      margin: 1rem 0;
+}
+
 .sd-facilitator-picture img {
   max-width: 200px;
   border-radius: 50%;
@@ -154,7 +167,7 @@ css styles for single template of CPT sd_cpt_event
       grid-template-columns: 220px auto;
       grid-template-rows: auto auto;
       grid-template-areas: 
-        "name    name" 
+        "picture name" 
         "picture about";
   }
   .sd-facilitator-name {
