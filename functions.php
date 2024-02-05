@@ -51,25 +51,15 @@ function ivy_hello_enqueue_scripts()
 	// child theme style.css
 	wp_enqueue_style( 'ivy-hello-child-style', get_stylesheet_uri(), array( 'ht-theme-style', 'ht-kb' ), filemtime( get_stylesheet_directory() . '/style.css' ), 'all');
 	// custom registers
-	wp_register_style( 'ivy-hello-spilde-css',  get_stylesheet_directory_uri() . '/node_modules/@splidejs/splide/dist/css/themes/splide-skyblue.min.css' );
-	wp_register_script( 'ivy-hello-spilde-js', get_stylesheet_directory_uri() . '/node_modules/@splidejs/splide/dist/js/splide.min.js' );
 	$shortcode_agenda_css_src = '/assets/shortcode-agenda.css';
 	$shortcode_agenda_js_src = '/assets/shortcode-agenda.js';
 	wp_register_style( 'ivy-shortcode-agenda-css', get_stylesheet_directory_uri() . $shortcode_agenda_css_src, array(), filemtime( get_stylesheet_directory() . $shortcode_agenda_css_src ), 'all' );
 	wp_register_script( 'ivy-shortcode-agenda-js', get_stylesheet_directory_uri() . $shortcode_agenda_js_src, array(), filemtime( get_stylesheet_directory() . $shortcode_agenda_js_src ), true );
 	wp_register_style( 'ivy-sidebar-agenda.css', get_stylesheet_directory_uri() . '/assets/sidebar-agenda.css', array(), filemtime(get_stylesheet_directory() . '/assets/sidebar-agenda.css' ) );
 	wp_register_script( 'ivy-sidebar-agenda.js', get_stylesheet_directory_uri() . '/assets/sidebar-agenda.js', array(), filemtime(get_stylesheet_directory() . '/assets/sidebar-agenda.js' ), true );
-	// custom enqueues
-	if( strpos( $_SERVER['REQUEST_URI'], '/termine-seminare/' ) !== false || strpos( $_SERVER['REQUEST_URI'], '/termine-seminare/kommende/' ) !== false ){ // enqueue for agenda page
-	wp_enqueue_style( 'ivy-sidebar-agenda.css' );
-	wp_enqueue_script( 'ivy-sidebar-agenda.js' );
-	// pass variable from php to js
-	// wp_localize_script('sidebar-agenda.js', 'WPVARS', array( 'siteurl' => site_url(), 'href' => home_url( $wp->request ) ));
-	}
+
 	global $post;
-	if( has_shortcode( $post->post_content, 'sd-widget-agenda' ) ){ // enqueue for shortcode [sd-widget-agenda]
-		wp_enqueue_style( 'ivy-hello-spilde-css' );
-		wp_enqueue_script( 'ivy-hello-spilde-js' );
+	if( has_shortcode( $post->post_content, 'sd-widget-agenda' ) || has_shortcode( $post->post_content, 'sd-widget-agenda-mini' ) || has_shortcode( $post->post_content, 'sd-widget-agenda-flex' ) ){ // enqueue for shortcode [sd-widget-agenda]
 		wp_enqueue_style( 'ivy-shortcode-agenda-css' );
 		wp_enqueue_script( 'ivy-shortcode-agenda-js' );
 	}
