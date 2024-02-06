@@ -366,6 +366,7 @@ function sd_widget_agenda_flex( $atts ) {
                 
                 // ################## Get facilitators ##################
                 $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
+                unset($eventfacilitators);
                 if ( !empty( $facilitator_posts ) ) {
                     $facilitators = [];
                     foreach ( $facilitator_posts as $facilitator_post ) {
@@ -373,7 +374,7 @@ function sd_widget_agenda_flex( $atts ) {
                     }
                     $eventfacilitators = implode(', ', $facilitators);
                     }
-                    
+            
                 // ################## Get teaser text ################## 
                 // $teaser = Utils::get_value_by_language( $event->sd_data['teaser'] );
                 
@@ -384,35 +385,22 @@ function sd_widget_agenda_flex( $atts ) {
             <div class="sd-event">
                <a href="<?php echo get_permalink( $date->wp_event_id ); ?>" itemprop="url" target="_parent" class="box<?php if (!empty( $eventfacilitators ) ) { echo ' has-facilitator'; } ?><?php if (!empty( $venue['name'] ) ) { echo ' has-location'; } ?>">
                
-               
-               <?php
-               
-               // ################## Get event teaser image, adjust image dimensions if width > 300px ##################  
-                $maxWidth = 300;
-                $quality = 70;
-                $originalImage = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) ?: Utils::get_value_by_language($event->sd_data['headerPictureUrl'] );
-                if (empty($originalImage)) { $originalImage = 'https://secret-of-tantra.seminardesk.de/Content/Extern/Termine.jpg'; }
-                list($width, $height) = getimagesize($originalImage);
-                if ($width > $maxWidth) {
-                    $newHeight = ($maxWidth / $width) * $height;
-                    $resizedImage = imagecreatetruecolor($maxWidth, $newHeight);
-                    $source = imagecreatefromjpeg($originalImage);
-                    imagecopyresampled($resizedImage, $source, 0, 0, 0, 0, $maxWidth, $newHeight, $width, $height);
-                    ob_start();
-                    imagejpeg($resizedImage, null, $quality);
-                    $imageData = ob_get_clean();
-                    echo '<div class="sd-event-image"><img decoding="async" src="data:image/jpeg;base64,'.base64_encode($imageData).'" alt="seminar image" width="'.$maxWidth.'" height="'.$newHeight.'"></div>';
-                } else {
-                    // Output the original image to the browser
-                    echo '<div class="sd-event-image"><img decoding="async" src="'.$originalImage.'" alt="seminar image" width="'.$width.'" height="'.$height.'"></div>';
-                } ?>
-                
+                <?php
+                // ################## Get event teaser image, fallback if not set ################## 
+                if (!empty(Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']))) {
+                    $img_url = Utils::get_value_by_language( $event->sd_data['teaserPictureUrl']) . '?1';
+                }
+                else {
+                	$img_url = '/wp-content/themes/Impreza-child/assets/seminar-image-default.jpg?4';
+                }
+                ?>
+            
+                 <div class="sd-event-image" style="background-image: url(<?php echo $img_url; ?>);" /></div>
                 <!--  ################## Get date/time ##################  -->
                 
                 <div class="sd-event-date">
                        <time itemprop="startDate" datetime="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>" content="<?= wp_date('Y-m-d\TG:i:sO', $date_begin) ?>">
                 <?php
-                    
                 // ################## dates & times ################## 
                     $date_begin = $date->sd_date_begin/1000;
                     $date_end = $date->sd_date_end/1000;
@@ -446,15 +434,13 @@ function sd_widget_agenda_flex( $atts ) {
         </div>
          <div class="sd-event-title">
             <h4 itemprop="name"><?= wp_strip_all_tags($event_main_title); ?></h4>
-            <?php if ($event_subtitle && $event_main_title !== $event_subtitle) : ?>
-             <p class="subtitle">
-              <?= wp_strip_all_tags($event_subtitle); ?>
-             </p>
-            <?php endif; ?>
+            <p class="subtitle"><?php if ($event_subtitle && $event_main_title !== $event_subtitle) : echo wp_strip_all_tags($event_subtitle);
+            endif; ?>
+            </p>
         </div>
-        
+    
         <div class="sd-event-facilitators" itemprop="organizer">
-            <?php if (!empty( $eventfacilitators)) { echo $eventfacilitators; } ?>
+            <?php if (!empty( $eventfacilitators)) { echo $eventfacilitators; }; ?>
         </div>
         <div class="sd-event-categories">
             <!-- <!-- hide categories for now -->
