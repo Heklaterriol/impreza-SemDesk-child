@@ -31,8 +31,8 @@ css styles for single template of CPT sd_cpt_event
 	background-color: rgb(235, 231, 231);
 }
 @media only screen and (max-width: 480px) {
-  .sd-modal-content {
-    height: calc(100% - 50px);
+.sd-modal-content {
+	height: calc(100% - 50px);
     width: calc(100% - 10px);
   }
 }
@@ -88,16 +88,17 @@ css styles for single template of CPT sd_cpt_event
 }
 
 @media only screen and (max-width: 600px) {
-  .title-container .float-left{
-    float: none;
-    width: 100%
-  }
 
-  .title-container .float-right {
-    float: none;
-    text-align: left;
-    margin: 1rem 0;
-  }
+.title-container .float-left{
+	float: none;
+	width: 100%
+}
+
+.title-container .float-right {
+	float: none;
+	text-align: left;
+	margin: 1rem 0;
+}
   .title-container {
     display: inline;
   }
@@ -127,20 +128,20 @@ css styles for single template of CPT sd_cpt_event
 }
 
 @media only screen and (min-width: 968px) {
-  .sd-available-dates {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
-      grid-template-areas: "links rechts";
-  }
+.sd-available-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "links rechts";
+}
 
-  .grid-item-left {
-      grid-area: links;
-  }
+.grid-item-left {
+    grid-area: links;
+}
 
-  .grid-item-right {
-      grid-area: rechts;
-  }
+.grid-item-right {
+    grid-area: rechts;
+}
 }
 
 .sd-facilitators {
@@ -153,25 +154,29 @@ css styles for single template of CPT sd_cpt_event
 }
 
 .sd-facilitator {
-      margin: 1rem 0;
+      margin: 1rem 0 2rem;
 }
 
-.sd-facilitator-picture img {
-  max-width: 200px;
-  border-radius: 50%;
-}
+.sd-facilitator-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+  border:1px solid #dee2e6;
+  }
+  .sd-facilitator-picture img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 
 @media only screen and (min-width: 600px) {
   .sd-facilitator {
       display: grid;
       grid-template-columns: 220px auto;
-      grid-template-rows: auto auto;
+      grid-template-rows: auto;
       grid-template-areas: 
-        "picture name" 
         "picture about";
-  }
-  .sd-facilitator-name {
-      grid-area: name;
   }
   .sd-facilitator-picture {
       grid-area: picture;

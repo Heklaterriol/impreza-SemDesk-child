@@ -143,7 +143,9 @@ if (have_posts()) {
                                         <div class="sd-available-dates">
                                           <div class="grid-item-left">
                                               <strong>Wann:</strong> <?= $date['date'] ?><br />
-                                                <strong>Kursleitung:</strong> <?= $date['facilitators'] ?>
+                                              <?php if(!empty($date['facilitators'])) { ?>
+                                              <strong>Kursleitung:</strong> <?= $date['facilitators']; 
+                                             } ?>
                                             </div>
                                             <div class="grid-item-right">
                                               <strong>Wo:</strong> <?= $date['venue'] ?><br />
@@ -154,25 +156,23 @@ if (have_posts()) {
                                       <div class="sd-description">
                                         <?= Utils::get_value_by_language($post->sd_data['description']); ?>
                                       </div>
-                                        <?php
+                                      <?php
                                         $facilitators = ivy_get_facilitators($post->sd_data['facilitators']);
                                         if ( !empty( $facilitators ) ) : ?>
                                       <div class="sd-facilitators">
                                         <h2>Referent*innen</h2>
                                           <?php foreach ( $facilitators as $facilitator ) : ?>
                                             <div class="sd-facilitator">
-                                              <div class="sd-facilitator-name">
-                                                <h3><?= $facilitator->sd_data['name']; ?></h3>
-                                              </div>
                                               <div class="sd-facilitator-picture">
                                                 <img src="<?= $facilitator->sd_data['pictureUrl'] ?>" alt="<?= $facilitator->sd_data['name'] ?>">
                                               </div>
                                               <div class="sd-facilitator-about">
+                                                <h3><?= $facilitator->sd_data['name']; ?></h3>
                                                 <?= Utils::get_value_by_language($facilitator->sd_data['about']); ?>
                                               </div>
                                             </div>
                                           <?php endforeach; ?>
-                                      </div>
+                                          </div>
                                         <?php endif; ?>
                                       <div class="sd-registration">
                                         <?php if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) : ?>
