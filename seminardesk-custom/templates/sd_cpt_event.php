@@ -92,7 +92,7 @@ if (have_posts()) {
 					</div>
 				</div>
 			</section>
-			<section class="l-section wpb_row us_custom_5e1b6e42 height_auto with_shape" id="inhalt">
+			<section class="l-section wpb_row regular-theme-style height_auto with_shape" id="inhalt">
         <div class="l-section-shape type_tilt pos_top" style="height: 2vmin;">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 8" preserveAspectRatio="none" width="100%" height="100%">
             <path fill="currentColor" d="M64 7.9 L64 10 L0 10 L0 0 Z"></path>
