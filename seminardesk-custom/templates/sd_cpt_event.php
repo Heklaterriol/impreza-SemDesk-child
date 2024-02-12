@@ -124,7 +124,8 @@ if (have_posts()) {
                                     ];
 //                                    $booking_list = Utils::get_event_dates_list( $post->sd_event_id, $status_lib );
                                     $booking_list = ivy_get_event_dates_list( $post->sd_event_id, $status_lib );
-                                    $booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );   
+                                    $booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['bookingPageUrl'] ?? null ) );  
+                                    $external_booking_url = esc_url( Utils::get_value_by_language( $post->sd_data['externalRegistrationUrl'] ?? null ) );
 
                                     Utils::get_value_by_language( $post->sd_data['title'], 'DE', '<div class="float-left"><h1 class="w-post-elm post_title entry-title color_link_inherit">', '</h1></div>', true);
                                     if ( !empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) {
@@ -139,20 +140,27 @@ if (have_posts()) {
                                   <div class="wpb_text_column">
                                     <div class="wpb_wrapper">
                                       <?= Utils::get_value_by_language($post->sd_data['subtitle'], 'DE', '<h2>', '</h2>', false); ?>
-                                      <?php foreach( $booking_list as $date ) : ?>
-                                        <div class="sd-available-dates">
-                                          <div class="grid-item-left">
-                                              <strong>Wann:</strong> <?= $date['date'] ?><br />
-                                              <?php if(!empty($date['facilitators'])) { ?>
-                                              <strong>Kursleitung:</strong> <?= $date['facilitators']; 
-                                             } ?>
-                                            </div>
-                                            <div class="grid-item-right">
-                                              <strong>Wo:</strong> <?= $date['venue'] ?><br />
-                                              <strong>Preis:</strong> <?= $date['price'] ?>
-                                            </div>
-                                        </div>
-                                      <?php endforeach; ?>
+                                      
+                                      <?php /// echo $date->sd_data['bookingPageStatus'] . 'bookingPageStatus' ?>
+                                      
+                                      
+                                      
+                                      <?php foreach( $booking_list as $date ) {
+                                      	if ( $date->sd_data['bookingPageStatus'] !== 'hidden_on_list' && $date->sd_data['bookingPageStatus'] !== 'hidden' && $date->sd_data['bookingPageStatus'] !== 'limited' ) { ?>
+                                      		<div class="sd-available-dates">
+                                      			<div class="grid-item-left">
+                                      				<strong>Wann:</strong> <?= $date['date'] ?><br />
+                                      				<?php if(!empty($date['facilitators'])) { ?>
+                                      					<strong>Kursleitung:</strong> <?= $date['facilitators']; 
+                                      					} ?>
+                                      			</div>
+                                      			<div class="grid-item-right">
+                                      				<strong>Wo:</strong> <?= $date['venue'] ?><br />
+                                      				<strong>Preis:</strong> <?= $date['price'] ?>
+                                      			</div>
+                                      		</div>
+                                      	<?php } } ?>
+                                    
                                       <div class="sd-description">
                                         <?= Utils::get_value_by_language($post->sd_data['description']); ?>
                                       </div>
@@ -178,7 +186,7 @@ if (have_posts()) {
                                         <?php if (!empty($booking_url) && $post->sd_data['registrationAvailable'] === true ) : ?>
                                           <div id="registration-area"><button class="sd-modal-booking-btn sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung</button></div>
                                         <?php else : ?>
-                                          <div id="registration-area"><a class="sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung direkt über die Seminarleitung</a></div>
+                                          <div id="registration-area"><a href="<?php echo $external_booking_url; ?>" target="_blank" class="sd-booking-btn-100 w-btn us-btn-style_4">Anmeldung direkt über die Seminarleitung</a></div>
                                         <?php endif; ?>
                                       </div>
                                     </div>
