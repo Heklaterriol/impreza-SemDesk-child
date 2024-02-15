@@ -143,10 +143,8 @@ if (have_posts()) {
                                       
                                       <?php /// echo $date->sd_data['bookingPageStatus'] . 'bookingPageStatus' ?>
                                       
-                                      
-                                      
                                       <?php foreach( $booking_list as $date ) {
-                                      	if ( $date->sd_data['bookingPageStatus'] !== 'hidden_on_list' && $date->sd_data['bookingPageStatus'] !== 'hidden' && $date->sd_data['bookingPageStatus'] !== 'limited' ) { ?>
+                                      	if ( $date['bookingPageStatus'] !== 'hidden_on_list' && $date['bookingPageStatus'] !== 'hidden' /* && $date['bookingPageStatus'] !== 'limited' */ ) { ?>
                                       		<div class="sd-available-dates">
                                       			<div class="grid-item-left">
                                       				<strong>Wann:</strong> <?= $date['date'] ?><br />

@@ -221,15 +221,18 @@ function ivy_get_event_dates_list( $event_id, $status_lib = null, $number_dates 
           'price' => $price, 
           'status_msg' => $status_msg, 
           'venue' => $venue, 
+          'bookingPageStatus' => $date_post->sd_data['bookingPageStatus'], 
       ];
       array_push($dates, $date_props);
       
-      $date_html = '<li>' . $title . implode(', ', $date_props) . '</li>';
-      array_push($dates_html, $date_html);
+      if ( $echo ) {
+        $date_html = '<li>' . $title . implode(', ', $date_props) . '</li>';
+        array_push($dates_html, $date_html);
+      }
     }
   }
 
-  if ( $echo && !empty($dates_html) ){
+  if ( $echo && $dates_html ){
     echo $before . '<ol>' . implode('', $dates_html) . '</ol>' . $after;
   }
   return $dates;

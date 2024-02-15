@@ -28,7 +28,7 @@ function sd_widget_agenda( $atts ) {
       'category' => 0, // Filter by category (SeminarDesk Label ID)? integer, 0 (=show all)
       'limit' => 0, // Limit number of items in list? integer, default: 0 (=no limit)
     ], $atts);
-  $category = $atts['category'] ?: $_GET['category'] ?? 0;
+    $category = $atts['category'] ?: $_GET['category'] ?? 0;
   
     // enable output buffering
     ob_start();
@@ -40,13 +40,13 @@ function sd_widget_agenda( $atts ) {
     $svg_arrow = '<div class="arrow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" focusable="false"><path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path></svg></div>'
     ?>
     <div id="shortcode-agenda">
-    <?php if ($atts['show_filters']) : ?>
-      <form action="">
+        <?php if ($atts['show_filters']) : ?>
+            <form action="">
                 <label for="categories">Kategorie</label>
                 <select name="category" id="select-sd-category" onchange="onchangeSelect(this)">
                     <?php
-          // Get and list categories
-          $categories = get_term_by( 'name', 'lg_id_'.SD_CATEGORIES_PARENT_LABEL_ID, 'sd_txn_labels' );
+                    // Get and list categories
+                    $categories = get_term_by( 'name', 'lg_id_'.SD_CATEGORIES_PARENT_LABEL_ID, 'sd_txn_labels' );
                     $child_categories_id = get_term_children( $categories->term_id, 'sd_txn_labels' );
                     echo '<option value="all">Kategorie (Alle)</option>';
                     foreach ( $child_categories_id as $child_category_id ){
@@ -57,7 +57,7 @@ function sd_widget_agenda( $atts ) {
                 </select>
             </form>
 
-    <?php endif; ?>
+        <?php endif; ?>
         <div id="widget-upcoming">
             <section class="splide" aria-labelledby="upcoming-heading">
                 <div class="splide__track">
@@ -65,7 +65,7 @@ function sd_widget_agenda( $atts ) {
                         <?php
             // Get dates
             $dates_upcoming = ivy_get_dates_upcoming_all();
-            
+
             $i = 0;
             $dates_filtered = $dates_upcoming;
             foreach ( $dates_upcoming as $date ){
@@ -78,15 +78,15 @@ function sd_widget_agenda( $atts ) {
                 ) {
                   // $is_remove = true;
                   unset ( $dates_filtered[$i] );
-                            }
-                            $i++;
-                        }
-                        $dates_upcoming = $dates_filtered;
-            $count = 0;
-            
-                        foreach( $dates_upcoming as $date){
+              }
+              $i++;
+          }
+          $dates_upcoming = $dates_filtered;
+          $count = 0;
+
+          foreach( $dates_upcoming as $date){
               $wp_timestamp_today = strtotime(wp_date('Y-m-d'));
-                          if (
+              if (
                 (
                   // Category filter?
                   !$category || 
@@ -103,130 +103,130 @@ function sd_widget_agenda( $atts ) {
                   ($atts['limit'] == 0 || $count < $atts['limit'])
                 )
               ) {
-                $count++;
-                
-                $event = get_post( $date->wp_event_id );
-                
-                // Get title and subtitles
-                $event_title = $event->sd_data['title'][0]['value'];
-                $event_subtitle = $event->sd_data['subtitle'][0]['value'];
-                $date_title = $date->post_title;
-                
-                // Get venue
-                $venue = $date->sd_data['venue'];
-                $venue_address = implode(', ', array_filter([
-                  $venue['name'], 
-//                  $venue['street1'], 
-//                  $venue['street2'], 
-                  $venue['city'], 
-                  $venue['country']
-                ]));
-                
-                // Get status
-                $booking_status = $date->sd_data['bookingPageStatus'];
-                $booking_status_label = IVY_STRINGS['status'][$booking_status]??ucwords($booking_status);
-                ?>
-                <div class="splide__slide">
-                  <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
-                    <div class="content">
-                      <h3 class="title"><?= wp_strip_all_tags($event_title); ?></h3>
-                      <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
-                        <h4 class="subtitle">
-                          <?= wp_strip_all_tags($event_subtitle); ?>
-                        </h4>
-                      <?php endif; ?>
-                      <?php if ($date_title && $date_title !== $event_title && $date_title !== $event_subtitle) : ?>
-                        <h5 class="post-title">
-                          <?= wp_strip_all_tags($date_title); ?>
-                        </h5>
-                      <?php endif; ?>
-                      <?php
-                      // Facilitators
-                      $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
-                      if  ( !empty( $facilitator_posts ) ) {
-                        $facilitators = [];
-                        foreach ( $facilitator_posts as $facilitator_post ){
-                          $facilitators[$facilitator_post->ID] = $facilitator_post->post_title;
+                  $count++;
+
+                  $event = get_post( $date->wp_event_id );
+
+                  // Get title and subtitles
+                  $event_title = $event->sd_data['title'][0]['value'];
+                  $event_subtitle = $event->sd_data['subtitle'][0]['value'];
+                  $date_title = $date->post_title;
+
+                  // Get venue
+                  $venue = $date->sd_data['venue'];
+                  $venue_address = implode(', ', array_filter([
+                    $venue['name'], 
+      //                  $venue['street1'], 
+      //                  $venue['street2'], 
+                    $venue['city'], 
+                    $venue['country']
+                  ]));
+
+                  // Get status
+                  $booking_status = $date->sd_data['bookingPageStatus'];
+                  $booking_status_label = IVY_STRINGS['status'][$booking_status]??ucwords($booking_status);
+                  ?>
+                  <div class="splide__slide">
+                    <a class="box" href="<?php echo get_permalink( $date->wp_event_id ); ?>">
+                      <div class="content">
+                        <h3 class="title"><?= wp_strip_all_tags($event_title); ?></h3>
+                        <?php if ($event_subtitle && $event_title !== $event_subtitle) : ?>
+                          <h4 class="subtitle">
+                            <?= wp_strip_all_tags($event_subtitle); ?>
+                          </h4>
+                        <?php endif; ?>
+                        <?php if ($date_title && $date_title !== $event_title && $date_title !== $event_subtitle) : ?>
+                          <h5 class="post-title">
+                            <?= wp_strip_all_tags($date_title); ?>
+                          </h5>
+                        <?php endif; ?>
+                        <?php
+                        // Facilitators
+                        $facilitator_posts = ivy_get_facilitators($date->sd_data['facilitators']);
+                        if  ( !empty( $facilitator_posts ) ) {
+                          $facilitators = [];
+                          foreach ( $facilitator_posts as $facilitator_post ){
+                            $facilitators[$facilitator_post->ID] = $facilitator_post->post_title;
+                          }
+                          ?>
+                          <div class="facilitators">
+                            <?= implode(', ', $facilitators); ?>
+                          </div>
+                          <?php
                         }
                         ?>
-                        <div class="facilitators">
-                          <?= implode(', ', $facilitators); ?>
-                        </div>
-                        <?php
-                      }
-                      ?>
-                      <div class="details">
-                     <!--   <div class="teaser">
-                          <?= $teaser; ?>
-                        </div>
-                        -->
-                        <hr class="divider-separator">
-                        <div class="detail-information">
-                          <div class="float-left">
-                            <div  class="date">
-                              <i class="fas fa-calendar-day"></i>
-                              <span>
-                                <?php
-                                //date start to end
-                                $date_begin = $date->sd_date_begin/1000;
-                                $date_end = $date->sd_date_end/1000;
-                                $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                                $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
-                                // single day event of today
-                                if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
-                                  echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                  $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
-                                  echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
-                                }
-                                // begins today
-                                elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
-                                  echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
-                                }
-                                 // ends today
-                                elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
-                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
-                                }
-                                // single day event
-                                elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
-                                  echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
-                                }
-                                else {
-
-                                  if( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
-                                    echo '<div>' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                        <div class="details">
+                       <!--   <div class="teaser">
+                            <?= $teaser; ?>
+                          </div>
+                          -->
+                          <hr class="divider-separator">
+                          <div class="detail-information">
+                            <div class="float-left">
+                              <div  class="date">
+                                <i class="fas fa-calendar-day"></i>
+                                <span>
+                                  <?php
+                                  //date start to end
+                                  $date_begin = $date->sd_date_begin/1000;
+                                  $date_end = $date->sd_date_end/1000;
+                                  $format_begin_time = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                                  $format_end_time = wp_date( 'i', $date_end ) != '00' ? 'G\hi' : 'G\h';
+                                  // single day event of today
+                                  if( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) && wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                    echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                                    $format_begin = wp_date( 'i', $date_begin ) != '00' ? 'G\hi' : 'G\h';
+                                    echo ', <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '</div>';
                                   }
-                                  elseif( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) ) {
-                                    echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                  // begins today
+                                  elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_begin) ){
+                                    echo '<div>' . ucfirst( IVY_STRINGS['today'] ) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>';
+                                  }
+                                   // ends today
+                                  elseif( wp_date('Y-m-d') == wp_date('Y-m-d', $date_end) ){
+                                    echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst( IVY_STRINGS['today'] ) . '</div>';
+                                  }
+                                  // single day event
+                                  elseif( wp_date('Y-m-d', $date_begin) == wp_date('Y-m-d', $date_end) ){
+                                    echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_end )) . '</div>, <div>' . wp_date( $format_begin_time, $date_begin ) . ' – ' . wp_date( $format_end_time, $date_end ) . '/div>';
                                   }
                                   else {
-                                    echo '<div>' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+
+                                    if( wp_date('Y', $date_begin) !== wp_date('Y', $date_end) ) {
+                                      echo '<div>' . ucfirst(wp_date( 'D, d. F Y', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                    }
+                                    elseif( wp_date('m', $date_begin) !== wp_date('m', $date_end) && wp_date('Y', $date_begin) == wp_date('Y', $date_end) ) {
+                                      echo '<div>' . ucfirst(wp_date( 'D, d. F', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                    }
+                                    else {
+                                      echo '<div>' . ucfirst(wp_date( 'D, d.', $date_begin )) . '</div> – <div>' . ucfirst(wp_date( 'D, d. F Y', $date_end )) . '</div>';
+                                    }
                                   }
-                                }
-                                ?>
-                              </span>
+                                  ?>
+                                </span>
+                              </div>
+                              <div class="location">
+                                <?php if ($venue_address) : ?>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><?= $venue_address ?></span>
+                                <?php endif; ?>
+                              </div>
+                              <div class="status">
+                                <span><?= $booking_status_label ?></span>
+                              </div>
                             </div>
-                            <div class="location">
-                              <?php if ($venue_address) : ?>
-                              <i class="fas fa-map-marker-alt"></i>
-                              <span><?= $venue_address ?></span>
-                              <?php endif; ?>
+                            <div class="float-right">
+                              <?php echo $svg_arrow; ?>
                             </div>
-                            <div class="status">
-                              <span><?= $booking_status_label ?></span>
-                            </div>
-                          </div>
-                          <div class="float-right">
-                            <?php echo $svg_arrow; ?>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <?php
+                    </a>
+                  </div>
+                  <?php
               }
-            }
-                    ?>
+          }
+          ?>
                 </div>
             </section>
         </div>
