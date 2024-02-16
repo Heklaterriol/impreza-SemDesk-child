@@ -51,7 +51,7 @@ function sd_widget_agenda( $atts ) {
             echo '<option value="all">Kategorie (Alle)</option>';
             foreach ( $child_categories_id as $child_category_id ){
                 $term_category = get_term( $child_category_id );
-                echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
+                echo '<option value="' . $term_category->slug . '"' . (($term_category->slug === $category)?' selected':'') . '>' . ucfirst( $term_category->description ) . '</option>';
             }
             ?>
           </select>
@@ -290,7 +290,7 @@ function sd_widget_agenda_flex( $atts ) {
                 echo '<option value="all">Kategorie (Alle)</option>';
                 foreach ( $child_categories_id as $child_category_id ){
                     $term_category = get_term( $child_category_id );
-                    echo '<option value="' . $term_category->slug . '">' . ucfirst( $term_category->description ) . '</option>';
+                    echo '<option value="' . $term_category->slug . '"' . (($term_category->slug === $category)?' selected':'') . '>' . ucfirst( $term_category->description ) . '</option>';
                 }
                 ?>
             </select>
