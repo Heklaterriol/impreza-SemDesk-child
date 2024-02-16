@@ -222,6 +222,8 @@ function ivy_get_event_dates_list( $event_id, $status_lib = null, $number_dates 
           'status_msg' => $status_msg, 
           'venue' => $venue, 
           'bookingPageStatus' => $date_post->sd_data['bookingPageStatus'], 
+          'debug' => $date_post, 
+          'debug_data' => $date_post->sd_data, 
       ];
       array_push($dates, $date_props);
       

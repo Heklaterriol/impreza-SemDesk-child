@@ -55,3 +55,11 @@ const splideUpcoming = new Splide( '#widget-upcoming .splide', {
 	}
 } );
 splideUpcoming.mount();
+
+function onChangeSelect(ele){
+	if (ele.value && ele.value !== "all"){
+		window.location.href="?" + ele.name + "=" + ele.value + "#content";
+	}else{
+		window.location.href= window.location.origin + window.location.pathname + "#content";
+	}
+}
