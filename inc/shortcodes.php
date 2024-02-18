@@ -56,7 +56,7 @@ function sd_widget_agenda( $atts ) {
             ?>
           </select>
         </form>
-
+        <div class="w-separator size_small"></div>
       <?php endif; ?>
       <div id="widget-upcoming">
         <section class="splide" aria-labelledby="upcoming-heading">
@@ -295,7 +295,7 @@ function sd_widget_agenda_flex( $atts ) {
                 ?>
             </select>
         </form>
-
+        <div class="w-separator size_small"></div>
     <?php endif; ?>
                     
     <?php
