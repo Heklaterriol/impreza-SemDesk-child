@@ -447,7 +447,8 @@ function sd_widget_agenda_flex( $atts ) {
         </div>
     
         <div class="sd-event-facilitators" itemprop="organizer">
-            <?php if (!empty( $eventfacilitators)) { echo $eventfacilitators; }; ?>
+            <?php if (!empty( $eventfacilitators)) { echo $eventfacilitators; };
+             unset($eventfacilitators); ?>
         </div>
         <div class="sd-event-categories">
             <!-- <!-- hide categories for now -->
