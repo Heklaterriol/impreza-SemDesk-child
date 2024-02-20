@@ -53,8 +53,10 @@ function ivy_hello_enqueue_scripts()
 	// custom registers
 	$shortcode_agenda_css_src = '/assets/shortcode-agenda.css';
 	$shortcode_agenda_js_src = '/assets/shortcode-agenda.js';
+//	$shortcode_agenda_filter_js_src = '/assets/shortcode-agenda-filter.js';
 	wp_register_style( 'ivy-shortcode-agenda-css', get_stylesheet_directory_uri() . $shortcode_agenda_css_src, array(), filemtime( get_stylesheet_directory() . $shortcode_agenda_css_src ), 'all' );
 	wp_register_script( 'ivy-shortcode-agenda-js', get_stylesheet_directory_uri() . $shortcode_agenda_js_src, array(), filemtime( get_stylesheet_directory() . $shortcode_agenda_js_src ), true );
+//	wp_register_script( 'ivy-shortcode-agenda-filter-js', get_stylesheet_directory_uri() . $shortcode_agenda_filter_js_src, array(), filemtime( get_stylesheet_directory() . $shortcode_agenda_filter_js_src ), true );
 	wp_register_style( 'ivy-sidebar-agenda.css', get_stylesheet_directory_uri() . '/assets/sidebar-agenda.css', array(), filemtime(get_stylesheet_directory() . '/assets/sidebar-agenda.css' ) );
 	wp_register_script( 'ivy-sidebar-agenda.js', get_stylesheet_directory_uri() . '/assets/sidebar-agenda.js', array(), filemtime(get_stylesheet_directory() . '/assets/sidebar-agenda.js' ), true );
 
