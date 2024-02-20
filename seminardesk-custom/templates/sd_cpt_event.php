@@ -154,7 +154,7 @@ if (have_posts()) {
                                       			</div>
                                       			<div class="grid-item-right">
                                       				<strong>Wo:</strong> <?= $date['venue'] ?><br />
-                                      				<strong>Preis:</strong> <?= $date['price'] ?>
+                                      				<?= $date['price'] ?>
                                       			</div>
                                       		</div>
                                       	<?php } } ?>
