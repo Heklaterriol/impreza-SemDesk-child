@@ -503,8 +503,6 @@ function sd_widget_agenda_flex( $atts ) {
  */
 add_shortcode( 'sd-widget-agenda-flex', 'sd_widget_agenda_flex' );
 
-
-
 /** ###############################################
  * shortcode sd-widget-agenda-mini
  ##################################################  */
