@@ -1,7 +1,9 @@
 <?php
 /**
- * Custom template for agenda page, taxonomy sd_txn_dates with upcoming event dates.
+ * The template for taxonomy sd_txn_dates by term year or month.
  * 
+ * @package SeminardeskPlugin
+ *
  * all the pages are redirected to the event listing
  */
  

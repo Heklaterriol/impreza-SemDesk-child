@@ -1,7 +1,10 @@
 <?php
 /**
- * Custom template for agenda page, taxonomy sd_txn_dates with upcoming event dates.
+ * The fallback template for taxonomy 
+ * used when specific taxonomy template for CPT doesn't exist.
  * 
+ * @package SeminardeskPlugin
+ *
  * all the pages are redirected to the event listing
  */
  
