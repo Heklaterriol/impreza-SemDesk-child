@@ -1,0 +1,285 @@
+# Copyright (C) 2023 SeminarDesk – Danker, Smaluhn & Tammen GbR
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: SeminarDesk for WordPress 1.5.0\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/seminardesk-wordpress\n"
+"POT-Creation-Date: 2023-11-28 10:00:48+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: admin/admin.php:27
+msgid "Save Settings"
+msgstr ""
+
+#: inc/Callbacks/ManagerCallbacks.php:151
+msgid "Enable/Disable GET methods of the REST API for SeminarDesk in WordPress."
+msgstr ""
+
+#: inc/Callbacks/ManagerCallbacks.php:154
+msgid "Open REST API for SeminarDesk"
+msgstr ""
+
+#: inc/Callbacks/ManagerCallbacks.php:175
+msgid ""
+"Make SeminarDesk template pages public in the WordPress frontend via slugs. "
+"The different items can be enabled/disabled and customize."
+msgstr ""
+
+#: inc/Callbacks/ManagerCallbacks.php:185
+msgid ""
+"Allows managing SeminarDesk CPTs, TXNs and Terms in the admin page. Use "
+"with caution."
+msgstr ""
+
+#: inc/Callbacks/ManagerCallbacks.php:195
+msgid "Manage the settings for WP uninstaller of the SeminarDesk plugin."
+msgstr ""
+
+#: inc/Controllers/AdminController.php:240
+msgid "Slugs"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:247
+msgid "REST API"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:254
+msgid "Developer"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:261
+msgid "Uninstall"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:382
+msgid "REST API:"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:398
+msgid "Debug:"
+msgstr ""
+
+#: inc/Controllers/AdminController.php:414
+msgid "Delete all:"
+msgstr ""
+
+#: inc/Controllers/CptController.php:53 inc/Controllers/CptController.php:54
+#: inc/Controllers/TaxonomyController.php:58
+msgid "Add New"
+msgstr ""
+
+#: inc/Controllers/CptController.php:55
+msgid "New"
+msgstr ""
+
+#: inc/Controllers/CptController.php:56
+#: inc/Controllers/TaxonomyController.php:56
+msgid "Edit"
+msgstr ""
+
+#: inc/Controllers/CptController.php:57 inc/Controllers/CptController.php:58
+msgid "View"
+msgstr ""
+
+#: inc/Controllers/CptController.php:61
+#: inc/Controllers/TaxonomyController.php:52
+msgid "Search"
+msgstr ""
+
+#: inc/Controllers/CptController.php:62 inc/Controllers/CptController.php:65
+#: inc/Controllers/TaxonomyController.php:54
+#: inc/Controllers/TaxonomyController.php:55
+msgid "Parent"
+msgstr ""
+
+#: inc/Controllers/CptController.php:63
+msgid "No found"
+msgstr ""
+
+#: inc/Controllers/CptController.php:64
+msgid "No found in Trash"
+msgstr ""
+
+#: inc/Controllers/CptController.php:66
+msgid "Archives"
+msgstr ""
+
+#: inc/Controllers/CptController.php:67
+msgid "Attributes"
+msgstr ""
+
+#: inc/Controllers/CptController.php:68
+msgid "Insert into"
+msgstr ""
+
+#: inc/Controllers/CptController.php:69
+msgid "Uploaded to this"
+msgstr ""
+
+#: inc/Controllers/CptController.php:98
+msgid "post type for SeminarDesk."
+msgstr ""
+
+#: inc/Controllers/TaxonomyController.php:53
+msgid "All"
+msgstr ""
+
+#: inc/Controllers/TaxonomyController.php:57
+msgid "Update"
+msgstr ""
+
+#: inc/Controllers/TaxonomyController.php:59
+msgid "New Name"
+msgstr ""
+
+#: inc/Utils/WebhookHandler.php:343 inc/Utils/WebhookHandler.php:350
+msgid "Dates of"
+msgstr ""
+
+#: inc/Utils/WebhookUtils.php:322
+msgid "Invalid image URL"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "SeminarDesk for WordPress"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.seminardesk.com/wordpress-plugin"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows you to connect SeminarDesk to your WordPress site in order to create "
+"posts for events, dates and facilitators."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "SeminarDesk – Danker, Smaluhn & Tammen GbR"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.seminardesk.com/"
+msgstr ""
+
+#: seminardesk-wordpress.php:124
+msgctxt "post type singular name"
+msgid "Event"
+msgstr ""
+
+#: seminardesk-wordpress.php:140
+msgctxt "post type singular name"
+msgid "Date"
+msgstr ""
+
+#: seminardesk-wordpress.php:157
+msgctxt "post type singular name"
+msgid "Facilitator"
+msgstr ""
+
+#: seminardesk-wordpress.php:172
+msgctxt "post type singular name"
+msgid "Label"
+msgstr ""
+
+#: seminardesk-wordpress.php:125
+msgctxt "post type general name"
+msgid "Events"
+msgstr ""
+
+#: seminardesk-wordpress.php:141
+msgctxt "post type general name"
+msgid "Dates"
+msgstr ""
+
+#: seminardesk-wordpress.php:158
+msgctxt "post type general name"
+msgid "Facilitators"
+msgstr ""
+
+#: seminardesk-wordpress.php:173
+msgctxt "post type general name"
+msgid "Labels"
+msgstr ""
+
+#: seminardesk-wordpress.php:126
+msgctxt "post type setting title"
+msgid "CPT Events"
+msgstr ""
+
+#: seminardesk-wordpress.php:142
+msgctxt "post type setting title"
+msgid "CPT Dates"
+msgstr ""
+
+#: seminardesk-wordpress.php:159
+msgctxt "post type setting title"
+msgid "CPT Facilitators"
+msgstr ""
+
+#: seminardesk-wordpress.php:174
+msgctxt "post type setting title"
+msgid "CPT Labels"
+msgstr ""
+
+#: seminardesk-wordpress.php:195
+msgctxt "taxonomy singular name"
+msgid "Date"
+msgstr ""
+
+#: seminardesk-wordpress.php:209
+msgctxt "taxonomy singular name"
+msgid "Facilitator"
+msgstr ""
+
+#: seminardesk-wordpress.php:224
+msgctxt "taxonomy singular name"
+msgid "Label"
+msgstr ""
+
+#: seminardesk-wordpress.php:196
+msgctxt "taxonomy general name"
+msgid "Dates"
+msgstr ""
+
+#: seminardesk-wordpress.php:210
+msgctxt "taxonomy general name"
+msgid "Facilitators"
+msgstr ""
+
+#: seminardesk-wordpress.php:225
+msgctxt "taxonomy general name"
+msgid "Labels"
+msgstr ""
+
+#: seminardesk-wordpress.php:197
+msgctxt "taxonomy setting title"
+msgid "TXN Dates"
+msgstr ""
+
+#: seminardesk-wordpress.php:211
+msgctxt "taxonomy setting title"
+msgid "TXN Facilitator"
+msgstr ""
+
+#: seminardesk-wordpress.php:226
+msgctxt "taxonomy setting title"
+msgid "TXN Labels"
+msgstr ""
+
+#: seminardesk-wordpress.php:247
+msgctxt "term title"
+msgid "Upcoming Events Dates"
+msgstr ""
+
+#: seminardesk-wordpress.php:254
+msgctxt "term title"
+msgid "Past Events Dates"
+msgstr ""

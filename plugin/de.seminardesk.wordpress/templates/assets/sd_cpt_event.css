@@ -1,0 +1,70 @@
+/* 
+css styles for single template of CPT sd_cpt_event
+
+@package SeminardeskPlugin
+ */
+
+ /* BEGIN modal popup box */
+ .sd-modal {
+	position: fixed;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	width:  100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(1.1);
+	transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.sd-modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 1rem 1.5rem;
+	height: 80%;
+	width: 80%;
+	background-color: rgb(235, 231, 231);
+}
+.sd-modal-title{
+	position: absolute;
+	font-size: 20px;
+	margin: 0.3em 0 0 0;
+	text-align: center;
+}
+.sd-modal-booking{
+	z-index: -1;
+	padding-top: 3em;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	border: none
+}
+.sd-modal-close-btn {
+	float: right;
+	width: 2rem;
+	line-height: 2rem;
+	margin: 0.3em 0em 1em 0;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 0.25rem;
+	background-color: lightgray;
+}
+.sd-modal-close-btn:hover {
+	background-color: darkgray;
+}
+.sd-modal-show {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(1.0);
+	transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+/* END modal popup */
